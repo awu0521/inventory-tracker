@@ -1,6 +1,7 @@
 export enum ShipmentStatus {
-    PACKED,
-    READY,
+    INCOMING,
+    PROCESSING,
+    OUTGOING,
     CANCELLED,
     LOST,
     RETURNED
