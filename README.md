@@ -1,1 +1,2 @@
-# inventory-tracker
+# Inventory Tracker
+Automatic Warehouse Item Manager
