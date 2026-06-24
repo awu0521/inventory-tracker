@@ -1,7 +1,7 @@
 import { Shipment } from "./Shipment";
 
 export class Warehouse {
-    storage: Shipment[];
+    storage: Shipment[] = [];
     name: string;
     address: string;
     

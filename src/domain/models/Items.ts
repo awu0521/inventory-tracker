@@ -1,6 +1,6 @@
-import { ItemType } from "../enums/ItemType.ts";
-import { Dimensions } from "../types/Dimensions.ts";
-import { ItemComponent } from "./ItemComponent.ts";
+import { ItemType } from "../enums/ItemType";
+import { Dimensions } from "../types/Dimensions";
+import { ItemComponent } from "./ItemComponent";
 
 // Individual item contained within container or shipment object.
 export class Item extends ItemComponent {
@@ -9,7 +9,7 @@ export class Item extends ItemComponent {
         super(name, weight, type, dimensions, desc);
     }
 
-    getTotalWeight() {
+    getTotalWeight(): number {
         return this.weight;
     }
 }

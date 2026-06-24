@@ -1,0 +1,33 @@
+{
+  "name": "inventory-tracker-2",
+  "version": "1.0.0",
+  "description": "Automatic Warehouse Item Manager",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awu0521/inventory-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/awu0521/inventory-tracker/issues"
+  },
+  "homepage": "https://github.com/awu0521/inventory-tracker#readme",
+  "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.0.1",
+    "chai": "^6.2.2",
+    "mocha": "^11.7.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}
