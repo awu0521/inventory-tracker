@@ -1,5 +1,5 @@
-import { ItemType } from "../enums/ItemType.ts";
-import { Dimensions } from "../types/Dimensions.ts";
+import { ItemType } from "../enums/ItemType";
+import { Dimensions } from "../types/Dimensions";
 
 // General type for all shipment objects in inventory.
 // All shipment objects carry these properties.
@@ -19,7 +19,7 @@ export abstract class ItemComponent {
         this.desc = desc;
     }
 
-    abstract getTotalWeight();
+    abstract getTotalWeight(): number;
     
     getName(): string {
         return this.name;

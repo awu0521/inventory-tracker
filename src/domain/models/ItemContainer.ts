@@ -1,10 +1,10 @@
-import { Dimensions } from "../types/Dimensions.ts";
-import { ItemType } from "../enums/ItemType.ts";
+import { Dimensions } from "../types/Dimensions";
+import { ItemType } from "../enums/ItemType";
 import { ItemComponent } from "./ItemComponent";
 
 // Collection of items contained within container or shipment object.
 export class ItemContainer extends ItemComponent {
-    components: ItemComponent[];
+    components: ItemComponent[] = [];
 
     constructor(name: string, weight: number, type: ItemType,
         dimensions: Dimensions, desc?: string) {
