@@ -11,16 +11,20 @@ export class ItemContainer extends ItemComponent {
         super(name, weight, type, dimensions, desc);
     }
 
+    add(component: ItemComponent): void {
+        // stub
+    }
+
+    remove(component: ItemComponent): void {
+        // stub
+    }
+
     // TODO: implement by getting total weight of all contained components.
     getTotalWeight(): number {
         return 0;
     }
 
-    add(): void {
-        // stub
-    }
-
-    remove(): void {
-        // stub
+    getComponents(): ItemComponent[] {
+        return this.components;
     }
 }
