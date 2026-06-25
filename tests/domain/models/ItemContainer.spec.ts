@@ -8,15 +8,12 @@ describe('ItemContainer', () => {
     let itemContainer: ItemContainer;
     let component1: ItemComponent;
     let component2: ItemComponent;
-    let component3: ItemComponent;
 
     before(() => {
         component1 = new ItemContainer('c1', 1,
             ItemType.BULK, {length: 1, width: 1, height: 1});
         component2 = new ItemContainer('c2', 2,
             ItemType.DOCUMENT, {length: 2, width: 2, height: 2});
-        component3 = new Item('i1', 3,
-            ItemType.FRAGILE, {length: 3, width: 3, height: 3});
     });
 
     beforeEach(() => {
