@@ -20,7 +20,7 @@ describe('ItemContainer', () => {
     });
 
     beforeEach(() => {
-        itemContainer = new ItemContainer('testContainer', 0,
+        itemContainer = new ItemContainer('testContainer', 5,
             ItemType.BULK, {length: 0, width: 0, height: 0});
     });
 
@@ -33,5 +33,46 @@ describe('ItemContainer', () => {
         itemContainer.add(component1);
         itemContainer.add(component2);
         expect(itemContainer.getComponents().length).to.eq(2);
+    });
+
+    it('should not add duplicate components', () => {
+        itemContainer.add(component1);
+        expect(itemContainer.getComponents().length).to.eq(1);
+        itemContainer.add(component1);
+        expect(itemContainer.getComponents().length).to.eq(1);
+    });
+
+    it('should remove a component', () => {
+        itemContainer.add(component1);
+        expect(itemContainer.getComponents().length).to.eq(1);
+        itemContainer.remove(component1);
+        expect(itemContainer.getComponents().length).to.eq(0);
+    });
+
+    it('should remove multiple components', () => {
+        itemContainer.add(component1);
+        itemContainer.add(component2);
+        expect(itemContainer.getComponents().length).to.eq(2);
+        itemContainer.remove(component1);
+        expect(itemContainer.getComponents().length).to.eq(1);
+        itemContainer.remove(component1);
+        expect(itemContainer.getComponents().length).to.eq(0);
+    });
+
+    it('should not remove a non-existing component', () => {
+        itemContainer.add(component1);
+        expect(itemContainer.getComponents().length).to.eq(1);
+        itemContainer.remove(component2);
+        expect(itemContainer.getComponents().length).to.eq(1);
+    });
+
+    it('should get the weight of itself', () => {
+        expect(itemContainer.getTotalWeight()).to.eq(5);
+    });
+
+    it('should get the weight of itself and its components', () => {
+        itemContainer.add(component1);
+        itemContainer.add(component2);
+        expect(itemContainer.getTotalWeight()).to.eq(8);
     });
 });

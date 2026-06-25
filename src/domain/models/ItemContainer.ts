@@ -11,6 +11,7 @@ export class ItemContainer extends ItemComponent {
         super(name, weight, type, dimensions, desc);
     }
 
+    // cannot add duplicate components
     add(component: ItemComponent): void {
         // stub
     }
