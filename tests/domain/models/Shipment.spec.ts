@@ -2,7 +2,6 @@ import { ItemType } from "../../../src/domain/enums/ItemType";
 import { ShipmentStatus } from "../../../src/domain/enums/ShipmentStatus";
 import { ItemComponent } from "../../../src/domain/models/ItemComponent";
 import { ItemContainer } from "../../../src/domain/models/ItemContainer";
-import { Item } from "../../../src/domain/models/Item";
 import { Shipment } from "../../../src/domain/models/Shipment";
 import { expect } from "chai";
 
