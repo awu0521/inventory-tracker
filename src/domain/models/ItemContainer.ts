@@ -4,7 +4,7 @@ import { ItemComponent } from "./ItemComponent";
 
 // Collection of items contained within container or shipment object.
 export class ItemContainer extends ItemComponent {
-    components: ItemComponent[] = [];
+    private components: ItemComponent[] = [];
 
     constructor(name: string, weight: number, type: ItemType,
         dimensions: Dimensions, desc?: string) {

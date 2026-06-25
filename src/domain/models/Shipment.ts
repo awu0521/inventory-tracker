@@ -2,12 +2,12 @@ import { ShipmentStatus } from "../enums/ShipmentStatus";
 import { ItemComponent } from "./ItemComponent";
 
 export class Shipment {
-    name: string;
-    contents: ItemComponent[];
-    origin: string;
-    dest: string;
-    status: ShipmentStatus;
-    deadline: Date;
+    private name: string;
+    private contents: ItemComponent[];
+    private origin: string;
+    private dest: string;
+    private status: ShipmentStatus;
+    private deadline: Date;
 
     constructor(name: string, contents: ItemComponent[], origin: string,
         dest: string, status: ShipmentStatus, deadline: Date) {
