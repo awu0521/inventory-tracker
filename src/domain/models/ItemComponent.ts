@@ -4,11 +4,11 @@ import { Dimensions } from "../types/Dimensions";
 // General type for all shipment objects in inventory.
 // All shipment objects carry these properties.
 export abstract class ItemComponent {
-    name: string;
-    weight: number;
-    type: ItemType;
-    dimensions: Dimensions;
-    desc: string | undefined;
+    protected name: string;
+    protected weight: number;
+    protected type: ItemType;
+    protected dimensions: Dimensions;
+    protected desc: string | undefined;
 
     constructor(name: string, weight: number, type: ItemType,
         dimensions: Dimensions, desc?: string) {

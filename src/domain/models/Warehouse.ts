@@ -1,9 +1,9 @@
 import { Shipment } from "./Shipment";
 
 export class Warehouse {
-    storage: Shipment[] = [];
-    name: string;
-    address: string;
+    private storage: Shipment[] = [];
+    private name: string;
+    private address: string;
     
     constructor(name: string, address: string) {
         this.name = name;

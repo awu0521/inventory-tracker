@@ -1,5 +1,9 @@
 # Inventory Tracker
 Automatic Warehouse Item Manager
 
-Run with:
-npx tsc
+- Compile with: ```npx tsc```.
+- Run tests with: ```npm test```.
+- Run coverage tests with: ```npm run coverage```.
+---
+
+Testing done with Mocha + Chai (c8 for coverage).

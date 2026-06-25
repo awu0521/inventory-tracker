@@ -16,3 +16,9 @@ yarn-error.log*
 # OS / editor
 .DS_Store
 .vscode/
+
+# c8 coverage
+coverage/
+.nyc_output/
+c8-report/
+*.lcov
