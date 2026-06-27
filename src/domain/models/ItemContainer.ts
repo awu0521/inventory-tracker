@@ -1,6 +1,8 @@
 import { Dimensions } from "../types/Dimensions";
 import { ItemType } from "../enums/ItemType";
 import { ItemComponent } from "./ItemComponent";
+import { DuplicateItemError } from "../errors/DuplicateItemError";
+import { NotFoundError } from "../errors/NotFoundError";
 
 // Collection of items contained within container or shipment object.
 export class ItemContainer extends ItemComponent {
@@ -12,17 +14,28 @@ export class ItemContainer extends ItemComponent {
     }
 
     // cannot add duplicate components
+    // throws 
     add(component: ItemComponent): void {
-        // stub
+        if (this.components.indexOf(component) === -1) this.components.push(component);
+        else throw new DuplicateItemError('Cannot add duplicate item components.');
     }
 
     remove(component: ItemComponent): void {
-        // stub
+        const index = this.components.indexOf(component);
+
+        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        else this.components.splice(index, 1);
     }
 
-    // TODO: implement by getting total weight of all contained components.
+    // gets the total weight of itself and all contained components.
     getTotalWeight(): number {
-        return 0;
+        let total = 0;
+
+        this.components.forEach((c: ItemComponent) => {
+            total += c.getTotalWeight();
+        });
+
+        return this.weight + total;
     }
 
     getComponents(): ItemComponent[] {
