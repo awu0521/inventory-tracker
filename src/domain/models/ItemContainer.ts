@@ -1,7 +1,7 @@
 import { Dimensions } from "../types/Dimensions";
 import { ItemType } from "../enums/ItemType";
 import { ItemComponent } from "./ItemComponent";
-import { DuplicateItemError } from "../errors/DuplicateItemError";
+import { DuplicateError } from "../errors/DuplicateError";
 import { NotFoundError } from "../errors/NotFoundError";
 
 // Collection of items contained within container or shipment object.
@@ -14,12 +14,13 @@ export class ItemContainer extends ItemComponent {
     }
 
     // cannot add duplicate components
-    // throws 
+    // throws DuplicateItemError if item component already added
     add(component: ItemComponent): void {
         if (this.components.indexOf(component) === -1) this.components.push(component);
-        else throw new DuplicateItemError('Cannot add duplicate item components.');
+        else throw new DuplicateError('Cannot add duplicate item components.');
     }
 
+    // throws NotFoundError if item component not added
     remove(component: ItemComponent): void {
         const index = this.components.indexOf(component);
 

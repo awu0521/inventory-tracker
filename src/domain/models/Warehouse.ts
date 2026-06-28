@@ -1,3 +1,6 @@
+import { ShipmentStatus } from "../enums/ShipmentStatus";
+import { DuplicateError } from "../errors/DuplicateError";
+import { NotFoundError } from "../errors/NotFoundError";
 import { Shipment } from "./Shipment";
 
 export class Warehouse {
@@ -10,22 +13,29 @@ export class Warehouse {
         this.address = address;
     }
 
+    // cannot add duplicate shipments
+    // throws DuplicateItemError if shipment already added
     add(shipment: Shipment): void {
-        // stub
+        if (this.storage.indexOf(shipment) === -1) this.storage.push(shipment);
+        else throw new DuplicateError('Cannot add duplicate shipments.');
     }
 
+    // throws NotFoundError if shipment not added
     remove(shipment: Shipment): void {
-        // stub
+        const index = this.storage.indexOf(shipment);
+
+        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        else this.storage.splice(index, 1);
     }
 
-    // TODO: implement using ShipmentStatus INCOMING tag.
+    // returns all shipments with ShipmentStatus INCOMING tag.
     getIncoming(): Shipment[] {
-        return [];
+        return this.storage.filter(shipment => shipment.getStatus() === ShipmentStatus.INCOMING);
     }
 
-    // TODO: implement using ShipmentStatus OUTGOING tag.
+    // returns all shipments with ShipmentStatus OUTGOING tag.
     getOutgoing(): Shipment[] {
-        return [];
+        return this.storage.filter(shipment => shipment.getStatus() === ShipmentStatus.OUTGOING);
     }
 
     getName(): string {

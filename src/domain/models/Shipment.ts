@@ -1,4 +1,7 @@
 import { ShipmentStatus } from "../enums/ShipmentStatus";
+import { DuplicateError } from "../errors/DuplicateError";
+import { InvalidStatusError } from "../errors/InvalidStatusError";
+import { NotFoundError } from "../errors/NotFoundError";
 import { ItemComponent } from "./ItemComponent";
 
 export class Shipment {
@@ -7,7 +10,7 @@ export class Shipment {
     private origin: string;
     private dest: string;
     private status: ShipmentStatus;
-    private deadline: Date;
+    private deadline: Date; // YYYY, MM, DD
 
     constructor(name: string, origin: string, dest: string,
         status: ShipmentStatus, deadline: Date) {
@@ -19,24 +22,31 @@ export class Shipment {
         }
 
     // cannot add duplicate components
+    // throws DuplicateItemError if item component already added
     add(component: ItemComponent): void {
-        // stub
+        if (this.contents.indexOf(component) === -1) this.contents.push(component);
+        else throw new DuplicateError('Cannot add duplicate item components.');
     }
 
+    // throws NotFoundError if item component not added
     remove(component: ItemComponent): void {
-        // stub
+        const index = this.contents.indexOf(component);
+
+        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        else this.contents.splice(index, 1);
     }
 
     // cannot update the status to incoming
-    setStatus(status: ShipmentStatus) {
-        this.status = status;
+    setStatus(status: ShipmentStatus): void {
+        if (status === ShipmentStatus.INCOMING) throw new InvalidStatusError('Cannot revert status to INCOMING.');
+        else this.status = status;
     }
 
-    setDeadline(deadline: Date) {
+    setDeadline(deadline: Date): void {
         this.deadline = deadline;
     }
 
-    setDest(dest: string) {
+    setDest(dest: string): void {
         this.dest = dest;
     }
 

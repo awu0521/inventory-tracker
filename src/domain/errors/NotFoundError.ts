@@ -1,4 +1,4 @@
-// Exception for attempting to add duplicate items to a list.
+// Exception for attempting to remove unadded items from a list.
 export class NotFoundError extends Error {
   constructor(message: string, public field?: string) {
     super(message);
