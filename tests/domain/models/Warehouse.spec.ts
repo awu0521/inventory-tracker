@@ -77,7 +77,7 @@ describe('Warehouse', () => {
     });
 
     it('should be instantiated with its specified elements', () => {
-        expect(warehouse.getName().length).to.eq('warehouse');
-        expect(warehouse.getAddress().length).to.eq('test st.');
+        expect(warehouse.getName()).to.eq('warehouse');
+        expect(warehouse.getAddress()).to.eq('test st.');
     });
 });

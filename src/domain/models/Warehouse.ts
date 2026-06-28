@@ -24,7 +24,7 @@ export class Warehouse {
     remove(shipment: Shipment): void {
         const index = this.storage.indexOf(shipment);
 
-        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        if (index === -1) throw new NotFoundError('Cannot remove unadded shipment.');
         else this.storage.splice(index, 1);
     }
 

@@ -6,4 +6,4 @@ Automatic Warehouse Item Manager
 - Run coverage tests with: ```npm run coverage```.
 ---
 
-Testing done with Mocha + Chai (c8 for coverage).
+Testing done with Mocha + Chai (c8 for coverage testing).
