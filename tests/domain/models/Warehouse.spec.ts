@@ -3,7 +3,7 @@ import { Shipment } from "../../../src/domain/models/Shipment";
 import { Warehouse } from "../../../src/domain/models/Warehouse";
 import { expect } from "chai";
 
-describe('ItemComponent', () => {
+describe('Warehouse', () => {
     let warehouse: Warehouse;
     let shipment1: Shipment;
     let shipment2: Shipment;
@@ -19,33 +19,42 @@ describe('ItemComponent', () => {
         warehouse = new Warehouse('warehouse', 'test st.')
     });
 
-    it('should add a component', () => {
+    it('should add a shipment', () => {
         warehouse.add(shipment1);
         expect(warehouse.getIncoming().length).to.eq(1);
     });
 
-    it('should add multiple components', () => {
+    it('should add multiple shipments', () => {
         warehouse.add(shipment1);
         warehouse.add(shipment2);
         expect(warehouse.getIncoming().length).to.eq(1);
         expect(warehouse.getOutgoing().length).to.eq(1);
     });
 
-    it('should not add duplicate components', () => {
-        warehouse.add(shipment1);
-        expect(warehouse.getIncoming().length).to.eq(1);
-        warehouse.add(shipment1);
-        expect(warehouse.getIncoming().length).to.eq(1);
+    it('should not add duplicate shipments', () => {
+        try {
+            warehouse.add(shipment1);
+            expect(warehouse.getIncoming().length).to.eq(1);
+        } catch (e) {
+            expect.fail('Should not have thrown.');
+        }
+
+        try {
+            warehouse.add(shipment1);
+            expect.fail('Should have thrown.');
+        } catch (e) {
+            expect(warehouse.getIncoming().length).to.eq(1);
+        }
     });
 
-    it('should remove a component', () => {
+    it('should remove a shipment', () => {
         warehouse.add(shipment1);
         expect(warehouse.getIncoming().length).to.eq(1);
         warehouse.remove(shipment1);
         expect(warehouse.getIncoming().length).to.eq(0);
     });
 
-    it('should remove multiple components', () => {
+    it('should remove multiple shipments', () => {
         warehouse.add(shipment1);
         warehouse.add(shipment2);
         expect(warehouse.getIncoming().length).to.eq(1);
@@ -56,15 +65,19 @@ describe('ItemComponent', () => {
         expect(warehouse.getOutgoing().length).to.eq(0);
     });
 
-    it('should not remove a non-existing component', () => {
-        warehouse.add(shipment1);
-        expect(warehouse.getIncoming().length).to.eq(1);
-        warehouse.remove(shipment2);
-        expect(warehouse.getIncoming().length).to.eq(1);
+    it('should not remove a non-existing shipment', () => {
+        try {
+            warehouse.add(shipment1);
+            expect(warehouse.getIncoming().length).to.eq(1);
+            warehouse.remove(shipment2);
+            expect.fail('Should have thrown.');
+        } catch (e) {
+            expect(warehouse.getIncoming().length).to.eq(1);
+        }
     });
 
     it('should be instantiated with its specified elements', () => {
-        expect(warehouse.getName().length).to.eq('warehouse');
-        expect(warehouse.getAddress().length).to.eq('test st.');
+        expect(warehouse.getName()).to.eq('warehouse');
+        expect(warehouse.getAddress()).to.eq('test st.');
     });
 });

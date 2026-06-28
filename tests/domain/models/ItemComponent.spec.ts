@@ -15,7 +15,7 @@ describe('ItemComponent', () => {
     it('should be instantiated with its specified attributes', () => {
         expect(itemComponent.getName()).to.eq('i1');
         expect(itemComponent.getType()).to.eq(ItemType.BULK);
-        expect(itemComponent.getDimensions).to.eq({
+        expect(itemComponent.getDimensions()).to.deep.eq({
             length: 1, width: 1, height: 1});
         expect(itemComponent.getDesc()).to.eq("No description provided.");
     });

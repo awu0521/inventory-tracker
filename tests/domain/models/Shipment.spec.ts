@@ -35,52 +35,77 @@ describe('Shipment', () => {
     });
 
     it('should not add duplicate components', () => {
-        shipment.add(component1);
-        expect(shipment.getContents().length).to.eq(1);
-        shipment.add(component1);
-        expect(shipment.getContents().length).to.eq(1);
+        try {
+            shipment.add(component1);
+            expect(shipment.getContents().length).to.eq(1);
+        } catch (e) {
+            expect.fail('Should not have thrown.');
+        }
+
+        try {
+            shipment.add(component1);
+            expect.fail('Should have thrown.');
+        } catch (e) {
+            expect(shipment.getContents().length).to.eq(1);
+        }
     });
 
     it('should remove a component', () => {
-        shipment.add(component1);
-        expect(shipment.getContents().length).to.eq(1);
-        shipment.remove(component1);
-        expect(shipment.getContents().length).to.eq(0);
+        try {
+            shipment.add(component1);
+            expect(shipment.getContents().length).to.eq(1);
+            shipment.remove(component1);
+            expect(shipment.getContents().length).to.eq(0);
+        } catch (e) {
+            expect.fail('Should not have thrown.');
+        }
     });
 
     it('should remove multiple components', () => {
-        shipment.add(component1);
-        shipment.add(component2);
-        expect(shipment.getContents().length).to.eq(2);
-        shipment.remove(component1);
-        expect(shipment.getContents().length).to.eq(1);
-        shipment.remove(component1);
-        expect(shipment.getContents().length).to.eq(0);
+        try {
+            shipment.add(component1);
+            shipment.add(component2);
+            expect(shipment.getContents().length).to.eq(2);
+            shipment.remove(component1);
+            expect(shipment.getContents().length).to.eq(1);
+            shipment.remove(component2);
+            expect(shipment.getContents().length).to.eq(0);
+        } catch (e) {
+            expect.fail('Should not have thrown.');
+        }
     });
 
     it('should not remove a non-existing component', () => {
-        shipment.add(component1);
-        expect(shipment.getContents().length).to.eq(1);
-        shipment.remove(component2);
-        expect(shipment.getContents().length).to.eq(1);
+        try {
+            shipment.add(component1);
+            expect(shipment.getContents().length).to.eq(1);
+            shipment.remove(component2);
+            expect.fail('Should have thrown.');
+        } catch (e) {
+            expect(shipment.getContents().length).to.eq(1);
+        }
     });
 
     it('should update the status', () => {
         shipment.setStatus(ShipmentStatus.OUTGOING);
-        expect(shipment.getStatus).to.eq(ShipmentStatus.OUTGOING);
+        expect(shipment.getStatus()).to.eq(ShipmentStatus.OUTGOING);
     });
 
     it('should not update the status to incoming', () => {
-        shipment.setStatus(ShipmentStatus.OUTGOING);
-        expect(shipment.getStatus).to.eq(ShipmentStatus.OUTGOING);
-        shipment.setStatus(ShipmentStatus.INCOMING);
-        expect(shipment.getStatus).to.eq(ShipmentStatus.OUTGOING);
+        try {
+            shipment.setStatus(ShipmentStatus.OUTGOING);
+            expect(shipment.getStatus()).to.eq(ShipmentStatus.OUTGOING);
+            shipment.setStatus(ShipmentStatus.INCOMING);
+            expect.fail('Should have thrown.');
+        } catch (e) {
+            expect(shipment.getStatus( )).to.eq(ShipmentStatus.OUTGOING);
+        }
     });
 
     it('should update the deadline', () => {
-        shipment.setDeadline(new Date(4, 2, 2028));
-        expect(shipment.getDeadline().getDay()).to.eq(2);
-        expect(shipment.getDeadline().getMonth).to.eq(4);
+        shipment.setDeadline(new Date(2028, 3, 2));
+        expect(shipment.getDeadline().getDate()).to.eq(2);
+        expect(shipment.getDeadline().getMonth()).to.eq(3);
         expect(shipment.getDeadline().getFullYear()).to.eq(2028);
     });
 
