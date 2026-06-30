@@ -57,6 +57,10 @@ export class InventorySystem {
     getComponents(): ItemComponent[] {
         return [];
     }
+
+    getWareHouse(): Warehouse {
+        return this.warehouse;
+    }
 }
 
 // SensorEvent (interface) defines the sub-SensorEvent
