@@ -27,18 +27,15 @@ export class InventorySystem {
     // throws DuplicateItemError if item component or shipment already added
     // TODO: consider adding Shipment ID attribute to pass ID rather than Shipment object.
     addComponentToShipment(component: ItemComponent, shipment: Shipment): void {
-        
     }
 
     // throws NotFoundError if shipment not added
     removeShipment(shipment: Shipment): void {
-
     }
 
     // throws NotFoundError if item component or shipment not added
     // TODO: consider adding Shipment ID attribute to pass ID rather than Shipment object.
     removeComponentFromShipment(component: ItemComponent, shipment: Shipment): void {
-        
     }
 
     // TODO: consider adding Shipment ID attribute to pass ID rather than Shipment object.
