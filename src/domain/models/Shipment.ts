@@ -1,8 +1,8 @@
-import { ShipmentStatus } from "../enums/ShipmentStatus";
-import { DuplicateError } from "../errors/DuplicateError";
-import { InvalidStatusError } from "../errors/InvalidStatusError";
-import { NotFoundError } from "../errors/NotFoundError";
-import { ItemComponent } from "./ItemComponent";
+import { ShipmentStatus } from "../enums/ShipmentStatus.js";
+import { DuplicateError } from "../errors/DuplicateError.js";
+import { InvalidStatusError } from "../errors/InvalidStatusError.js";
+import { NotFoundError } from "../errors/NotFoundError.js";
+import { ItemComponent } from "./ItemComponent.js";
 
 export class Shipment {
     private name: string;

@@ -1,6 +1,6 @@
-import { ShipmentStatus } from "../../../src/domain/enums/ShipmentStatus";
-import { Shipment } from "../../../src/domain/models/Shipment";
-import { Warehouse } from "../../../src/domain/models/Warehouse";
+import { ShipmentStatus } from "../../../src/domain/enums/ShipmentStatus.js";
+import { Shipment } from "../../../src/domain/models/Shipment.js";
+import { Warehouse } from "../../../src/domain/models/Warehouse.js";
 import { expect } from "chai";
 
 describe('Warehouse', () => {

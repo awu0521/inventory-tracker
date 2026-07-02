@@ -1,8 +1,8 @@
-import { ItemType } from "../../../src/domain/enums/ItemType";
-import { ShipmentStatus } from "../../../src/domain/enums/ShipmentStatus";
-import { ItemComponent } from "../../../src/domain/models/ItemComponent";
-import { ItemContainer } from "../../../src/domain/models/ItemContainer";
-import { Shipment } from "../../../src/domain/models/Shipment";
+import { ItemType } from "../../../src/domain/enums/ItemType.js";
+import { ShipmentStatus } from "../../../src/domain/enums/ShipmentStatus.js";
+import { ItemComponent } from "../../../src/domain/models/ItemComponent.js";
+import { ItemContainer } from "../../../src/domain/models/ItemContainer.js";
+import { Shipment } from "../../../src/domain/models/Shipment.js";
 import { expect } from "chai";
 
 describe('Shipment', () => {

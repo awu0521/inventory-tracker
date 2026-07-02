@@ -1,5 +1,5 @@
-import { ItemType } from "../enums/ItemType";
-import { Dimensions } from "../types/Dimensions";
+import { ItemType } from "../enums/ItemType.js";
+import { Dimensions } from "../types/Dimensions.js";
 
 // General type for all shipment objects in inventory.
 // All shipment objects carry these properties.

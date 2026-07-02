@@ -1,4 +1,4 @@
-import { InventorySystem } from "../inventory/InventorySystem"
+import { InventorySystem } from "../inventory/InventorySystem.js";
 
 // defines handler for different event types from the server.
 export interface SensorEvent {

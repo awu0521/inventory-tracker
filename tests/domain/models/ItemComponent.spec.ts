@@ -1,6 +1,6 @@
-import { ItemType } from "../../../src/domain/enums/ItemType";
-import { Item } from "../../../src/domain/models/Item";
-import { ItemComponent } from "../../../src/domain/models/ItemComponent";
+import { ItemType } from "../../../src/domain/enums/ItemType.js";
+import { Item } from "../../../src/domain/models/Item.js";
+import { ItemComponent } from "../../../src/domain/models/ItemComponent.js";
 import { expect } from "chai";
 
 describe('ItemComponent', () => {

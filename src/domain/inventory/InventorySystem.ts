@@ -1,7 +1,7 @@
-import { SensorEvent } from "../events/SensorEvent";
-import { ItemComponent } from "../models/ItemComponent";
-import { Shipment } from "../models/Shipment";
-import { Warehouse } from "../models/Warehouse";
+import { SensorEvent } from "../events/SensorEvent.js";
+import { ItemComponent } from "../models/ItemComponent.js";
+import { Shipment } from "../models/Shipment.js";
+import { Warehouse } from "../models/Warehouse.js";
 
 // contains all permissable actions that can be done on the inventory.
 export class InventorySystem {

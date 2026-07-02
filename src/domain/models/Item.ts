@@ -1,6 +1,6 @@
-import { ItemType } from "../enums/ItemType";
-import { Dimensions } from "../types/Dimensions";
-import { ItemComponent } from "./ItemComponent";
+import { ItemType } from "../enums/ItemType.js";
+import { Dimensions } from "../types/Dimensions.js";
+import { ItemComponent } from "./ItemComponent.js";
 
 // Individual item contained within container or shipment object.
 export class Item extends ItemComponent {

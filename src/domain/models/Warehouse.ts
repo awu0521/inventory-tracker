@@ -1,7 +1,7 @@
-import { ShipmentStatus } from "../enums/ShipmentStatus";
-import { DuplicateError } from "../errors/DuplicateError";
-import { NotFoundError } from "../errors/NotFoundError";
-import { Shipment } from "./Shipment";
+import { ShipmentStatus } from "../enums/ShipmentStatus.js";
+import { DuplicateError } from "../errors/DuplicateError.js";
+import { NotFoundError } from "../errors/NotFoundError.js";
+import { Shipment } from "./Shipment.js";
 
 export class Warehouse {
     private storage: Shipment[] = [];

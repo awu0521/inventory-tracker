@@ -1,8 +1,8 @@
-import { Dimensions } from "../types/Dimensions";
-import { ItemType } from "../enums/ItemType";
-import { ItemComponent } from "./ItemComponent";
-import { DuplicateError } from "../errors/DuplicateError";
-import { NotFoundError } from "../errors/NotFoundError";
+import { Dimensions } from "../types/Dimensions.js";
+import { ItemType } from "../enums/ItemType.js";
+import { ItemComponent } from "./ItemComponent.js";
+import { DuplicateError } from "../errors/DuplicateError.js";
+import { NotFoundError } from "../errors/NotFoundError.js";
 
 // Collection of items contained within container or shipment object.
 export class ItemContainer extends ItemComponent {
