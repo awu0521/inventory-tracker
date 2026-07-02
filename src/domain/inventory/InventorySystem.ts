@@ -17,9 +17,8 @@ export class InventorySystem {
     // the server calls on the InventorySystem to handle an update with
     // a specific event instance.
     // TODO: resolve what shipment to pass into process here.
-    handleEvent(event: SensorEvent): void {
-        event.process(this, new Shipment('templateShipment', 'inventory',
-            'inventory', ShipmentStatus.INCOMING, new Date()));
+    handleEvent(event: SensorEvent, shipment: Shipment): void {
+        event.process(this, shipment);
     }
 
     // cannot add duplicate components
