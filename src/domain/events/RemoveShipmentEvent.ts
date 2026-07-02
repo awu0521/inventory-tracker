@@ -1,3 +1,4 @@
+import { EventType } from "../enums/EventType";
 import { InventorySystem } from "../inventory/InventorySystem";
 import { Shipment } from "../models/Shipment";
 import { SensorEvent } from "./SensorEvent";
@@ -6,6 +7,11 @@ import { SensorEvent } from "./SensorEvent";
 export class RemoveShipmentEvent extends SensorEvent {
 
     process(invSys: InventorySystem, shipment: Shipment): void {
-        invSys.removeShipment(shipment);
+        try {
+            invSys.removeShipment(shipment);
+            this.logger.log(EventType.SUCCESSFUL_SHIPMENT_REMOVED);
+        } catch (e) {
+            this.logger.log(EventType.FAILED_SHIPMENT_REMOVED);
+        }
     }
 }

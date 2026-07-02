@@ -1,4 +1,3 @@
-import { ShipmentStatus } from "../enums/ShipmentStatus";
 import { DuplicateError } from "../errors/DuplicateError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { SensorEvent } from "../events/SensorEvent";

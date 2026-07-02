@@ -3,6 +3,7 @@ import { AddShipmentEvent } from "./domain/events/AddShipmentEvent";
 import { RemoveShipmentEvent } from "./domain/events/RemoveShipmentEvent";
 import { InventorySystem } from "./domain/inventory/InventorySystem";
 import { Shipment } from "./domain/models/Shipment";
+import { EventLogger } from "./services/EventLogger";
 
 const express = require('express');
 const app = express();
