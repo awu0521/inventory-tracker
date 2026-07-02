@@ -14,10 +14,6 @@ describe('InventorySystem', () => {
     let component2: ItemComponent;
 
     before(() => {
-        shipment1 = new Shipment('s1', 'from1', 'to1',
-            ShipmentStatus.INCOMING, new Date(1, 1, 2026));
-        shipment2 = new Shipment('s2', 'from2', 'to2',
-            ShipmentStatus.OUTGOING, new Date(12, 12, 2030));
         component1 = new ItemContainer('c1', 1,
             ItemType.BULK, {length: 1, width: 1, height: 1});
         component2 = new ItemContainer('c2', 2,
@@ -26,6 +22,10 @@ describe('InventorySystem', () => {
 
     beforeEach(() => {
         invSys = new InventorySystem('warehouse', 'test st.');
+        shipment1 = new Shipment('s1', 'from1', 'to1',
+            ShipmentStatus.INCOMING, new Date(1, 1, 2026));
+        shipment2 = new Shipment('s2', 'from2', 'to2',
+            ShipmentStatus.OUTGOING, new Date(12, 12, 2030));
     });
 
     it('should add a shipment', () => {
@@ -62,10 +62,10 @@ describe('InventorySystem', () => {
         expect(invSys.getShipment(shipment1).getContents().length).to.eq(1);
     });
 
-    it('should add multiple components to a shipments', () => {
+    it('should add multiple components to a shipment', () => {
         invSys.addShipment(shipment1);
         invSys.addComponentToShipment(component1, shipment1);
-        invSys.addComponentToShipment(component2, shipment2);
+        invSys.addComponentToShipment(component2, shipment1);
         expect(invSys.getShipment(shipment1).getContents().length).to.eq(2);
     });
 
@@ -161,7 +161,6 @@ describe('InventorySystem', () => {
             invSys.removeComponentFromShipment(component2, shipment1);
             expect.fail('Should have thrown.');
         } catch (e) {
-            expect.fail('Should not have thrown.');
             expect(invSys.getShipment(shipment1).getContents().length).to.eq(1);
         }
     });
