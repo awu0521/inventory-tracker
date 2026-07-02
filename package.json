@@ -2,13 +2,14 @@
   "name": "inventory-tracker-2",
   "version": "1.0.0",
   "description": "Automatic Warehouse Item Manager",
-  "main": "index.js",
+  "main": "dist/server.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "mocha -r ts-node/register/transpile-only \"tests/**/*.ts\"",
-    "coverage": "c8 mocha -r ts-node/register/transpile-only \"tests/**/*.ts\""
+    "coverage": "c8 mocha -r ts-node/register/transpile-only \"tests/**/*.ts\"",
+    "dev": "ts-node src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,9 @@
   "homepage": "https://github.com/awu0521/inventory-tracker#readme",
   "devDependencies": {
     "@types/chai": "^5.2.3",
+    "@types/express": "^5.0.6",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.1.0",
     "c8": "^11.0.0",
     "chai": "^6.2.2",
     "mocha": "^11.7.6",
