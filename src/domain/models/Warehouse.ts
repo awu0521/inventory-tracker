@@ -45,4 +45,8 @@ export class Warehouse {
     getAddress(): string {
         return this.address;
     }
+
+    getStorage(): Shipment[] {
+        return this.storage;
+    }
 }
