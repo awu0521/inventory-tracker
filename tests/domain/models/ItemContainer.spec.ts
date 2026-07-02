@@ -1,7 +1,6 @@
 import { ItemType } from "../../../src/domain/enums/ItemType";
 import { ItemComponent } from "../../../src/domain/models/ItemComponent";
 import { ItemContainer } from "../../../src/domain/models/ItemContainer";
-import { Item } from "../../../src/domain/models/Item";
 import { expect } from "chai";
 
 describe('ItemContainer', () => {
