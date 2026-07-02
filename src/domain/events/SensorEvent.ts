@@ -1,7 +1,8 @@
 import { InventorySystem } from "../inventory/InventorySystem"
+import { Shipment } from "../models/Shipment";
 
 // defines handler for different event types from the server.
-export interface SensorEvent {
+export abstract class SensorEvent {
 
-    process(invSys: InventorySystem): void;
+    abstract process(invSys: InventorySystem, shipment: Shipment): void;
 }
