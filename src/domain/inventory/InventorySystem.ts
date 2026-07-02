@@ -1,3 +1,4 @@
+import { ShipmentStatus } from "../enums/ShipmentStatus";
 import { SensorEvent } from "../events/SensorEvent";
 import { ItemComponent } from "../models/ItemComponent";
 import { Shipment } from "../models/Shipment";
@@ -13,8 +14,10 @@ export class InventorySystem {
 
     // the server calls on the InventorySystem to handle an update with
     // a specific event instance.
+    // TODO: resolve what shipment to pass into process here.
     handleEvent(event: SensorEvent): void {
-        event.process(this);
+        event.process(this, new Shipment('templateShipment', 'inventory',
+            'inventory', ShipmentStatus.INCOMING, new Date()));
     }
 
     // cannot add duplicate components
