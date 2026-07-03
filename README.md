@@ -8,5 +8,6 @@ Automatic Warehouse Item Manager
 - Start server with: ```npm run dev```.
 - Stop server with: *CTRL+C*.
 ---
-
+- Test server with: ```npm run simulate```.
+---
 Testing done with Mocha + Chai (c8 for coverage testing).
