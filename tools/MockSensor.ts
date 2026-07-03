@@ -1,34 +1,36 @@
 const PORT: string = 'https://localhost:3000/sensor';
 
 async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
-  try {
-    const response = await fetch(PORT, {
-      method: 'POST',
-      body: JSON.stringify({
-        innerSensor: innerSensorTime,
-        outerSensor: outerSensorTime,
-        name: 'testShipment',
-        origin: 'testOrigin',
-        dest: 'testDest',
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
+    try {
+        const response = await fetch(PORT, {
+            method: 'POST',
+            body: JSON.stringify({
+                innerSensor: innerSensorTime,
+                outerSensor: outerSensorTime,
+                name: 'testShipment',
+                origin: 'testOrigin',
+                dest: 'testDest',
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
 
-    if (!response.ok) {
-      throw new Error(`Error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        return response;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
     }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log('error message: ', error.message);
-      return error.message;
-    } else {
-      console.log('unexpected error: ', error);
-      return 'An unexpected error occurred';
-    }
-  }
 }
 
 async function main() {
