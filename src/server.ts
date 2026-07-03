@@ -3,7 +3,7 @@ import { AddShipmentEvent } from "./domain/events/AddShipmentEvent";
 import { RemoveShipmentEvent } from "./domain/events/RemoveShipmentEvent";
 import { InventorySystem } from "./domain/inventory/InventorySystem";
 import { Shipment } from "./domain/models/Shipment";
-import { EventLogger } from "./services/EventLogger";
+import type { Request, Response } from "express";
 
 const express = require('express');
 const app = express();
@@ -17,19 +17,28 @@ function start() {
     invSys = new InventorySystem('system', 'warehouse');
 }
 
-app.post('/sensor', () => {
-    // TODO: compare sensor update times for incoming vs. outgoing.
-    
+app.get('/', (req: Request, res: Response) => {
+    res.send("Server is running.");
+});
+
+app.post('/sensor', (req: Request, res: Response) => {
+    // TODO: extract incoming vs. outgoing logic elsewhere to avoid SRP violation.
     let incoming: boolean = false;
-    let outgoing: boolean = false;
+    const body: any = req.body;
+    
+    if (body.innerSensor > body.outerSensor) incoming = true;
+
+    // TODO: pass data to an adapter that converts JSON to uniform format.
+    // TODO: make uniform JSON data into a Shipment object.
 
     // TODO: get shipment data from incoming JSON from arduino.
     if (incoming) invSys.handleEvent(new AddShipmentEvent(), new Shipment('temp',
         'origin', 'dest', ShipmentStatus.INCOMING, new Date()));
 
     // TODO: get shipment data from incoming JSON from arduino.
-    //       here it should be a shipment that the warehouse contains.
-    if (outgoing) invSys.handleEvent(new RemoveShipmentEvent(), new Shipment('temp',
+    //       here it should be a shipment that the warehouse contains,
+    //       so we should update that specific shipment, not a new shipment object.
+    if (!incoming) invSys.handleEvent(new RemoveShipmentEvent(), new Shipment('temp',
         'origin', 'dest', ShipmentStatus.INCOMING, new Date()));
 });
 
