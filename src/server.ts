@@ -1,14 +1,16 @@
-import { ShipmentStatus } from "./domain/enums/ShipmentStatus";
 import { AddShipmentEvent } from "./domain/events/AddShipmentEvent";
 import { RemoveShipmentEvent } from "./domain/events/RemoveShipmentEvent";
 import { InventorySystem } from "./domain/inventory/InventorySystem";
 import { Shipment } from "./domain/models/Shipment";
 import type { Request, Response } from "express";
 import { parse } from "./parsers/shipmentParser";
+import { SensorEvent } from "./domain/events/SensorEvent";
 
 const express = require('express');
 const app = express();
 const PORT = 3000;
+
+app.use(express.json());
 
 let invSys: InventorySystem;
 
@@ -23,21 +25,24 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/sensor', (req: Request, res: Response) => {
-    // TODO: pass data to an adapter that converts JSON to uniform format.
-    // TODO: add checks for unpopulated shipment objects
-    // TODO: allow user/importer to instantiate shipments and item components.
-    let incoming: boolean = true;
-    const body: JSON = req.body; // TODO: check if req is actually sending JSON
-    
-    const shipment: Shipment = parse(body);
+    try {
+        // TODO: pass data to an adapter that converts JSON to uniform format.
+        // TODO: add checks for unpopulated shipment objects
+        // TODO: allow user/importer to instantiate shipments and item components.
+        let incoming: boolean = false;
+        const body: any = req.body;
+        const shipment: Shipment = parse(body);
 
-    if (incoming) invSys.handleEvent(new AddShipmentEvent(), shipment);
+        // NOTE: if RemoveShipmentEvent, it should be a shipment that the warehouse contains,
+        // so we should update that specific shipment, not a new shipment object.
+        const event: SensorEvent = incoming ? new AddShipmentEvent() : new RemoveShipmentEvent();
 
-    incoming = false;
-
-    // here it should be a shipment that the warehouse contains,
-    // so we should update that specific shipment, not a new shipment object.
-    if (!incoming) invSys.handleEvent(new RemoveShipmentEvent(), shipment);
+        invSys.handleEvent(event, shipment);
+        res.status(200).json({ message: 'Shipment processed successfully' });
+    } catch (error) {
+        console.error('Error on /sensor endpoint:', error);
+        res.status(500).json({ error: (error as Error).message });
+    }
 });
 
 app.listen(PORT, () => {

@@ -1,6 +1,7 @@
 # Inventory Tracker
 Automatic Warehouse Item Manager
 ---
+- Build with ```npm install```.
 - Compile with: ```npx tsc```.
 - Run tests with: ```npm test```.
 - Run coverage tests with: ```npm run coverage```.
