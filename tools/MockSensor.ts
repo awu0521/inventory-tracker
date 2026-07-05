@@ -8,15 +8,15 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
         const response = await fetch(PORT, {
             method: 'POST',
             body: JSON.stringify({
-                innerSensor: innerSensorTime,
-                outerSensor: outerSensorTime,
-                name: 'testShipment',
-                contents: [testItem1, testContainer],
-                origin: 'testOrigin',
-                dest: 'testDest',
-                status: 'incoming',
-                deadline: '00/00/00'
-            }),
+            innerSensor: innerSensorTime,
+            outerSensor: outerSensorTime,
+            name: 'testShipment',
+            contents: [testItem1, testContainer],
+            origin: 'testOrigin',
+            dest: 'testDest',
+            status: 'incoming',
+            deadline: '00/00/00'
+        }),
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
@@ -31,6 +31,7 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
     } catch (error) {
         if (error instanceof Error) {
             console.log('error message: ', error.message);
+            console.log('error cause: ', (error as any).cause);
             return error.message;
         } else {
             console.log('unexpected error: ', error);
