@@ -1,4 +1,7 @@
-const PORT: string = 'https://localhost:3000/sensor';
+import { testContainer } from "../tests/fixtures/itemContainers";
+import { testItem1 } from "../tests/fixtures/items";
+
+const PORT: string = 'http://localhost:3000/sensor';
 
 async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
     try {
@@ -8,8 +11,11 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
                 innerSensor: innerSensorTime,
                 outerSensor: outerSensorTime,
                 name: 'testShipment',
+                contents: [testItem1, testContainer],
                 origin: 'testOrigin',
                 dest: 'testDest',
+                status: 'incoming',
+                deadline: '00/00/00'
             }),
             headers: {
                 'Content-Type': 'application/json',
