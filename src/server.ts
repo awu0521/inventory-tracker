@@ -4,6 +4,7 @@ import { RemoveShipmentEvent } from "./domain/events/RemoveShipmentEvent";
 import { InventorySystem } from "./domain/inventory/InventorySystem";
 import { Shipment } from "./domain/models/Shipment";
 import type { Request, Response } from "express";
+import { parse } from "./parsers/shipmentParser";
 
 const express = require('express');
 const app = express();
@@ -22,26 +23,19 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/sensor', (req: Request, res: Response) => {
-    // TODO: extract incoming vs. outgoing logic elsewhere to avoid SRP violation.
-    let incoming: boolean = false;
-    const body: any = req.body;
-    
-    if (body.innerSensor > body.outerSensor) incoming = true;
-
-    
-
     // TODO: pass data to an adapter that converts JSON to uniform format.
-    // TODO: make uniform JSON data into a Shipment object.
+    // TODO: add checks for unpopulated shipment objects
+    // TODO: allow user/importer to instantiate shipments and item components.
+    let incoming: boolean = false;
+    const body: JSON = req.body; // TODO: check if req is actually sending JSON
+    
+    const shipment: Shipment = parse(body);
 
-    // TODO: get shipment data from incoming JSON from arduino.
-    if (incoming) invSys.handleEvent(new AddShipmentEvent(), new Shipment('temp',
-        'origin', 'dest', ShipmentStatus.INCOMING, new Date()));
+    if (incoming) invSys.handleEvent(new AddShipmentEvent(), shipment);
 
-    // TODO: get shipment data from incoming JSON from arduino.
-    //       here it should be a shipment that the warehouse contains,
-    //       so we should update that specific shipment, not a new shipment object.
-    if (!incoming) invSys.handleEvent(new RemoveShipmentEvent(), new Shipment('temp',
-        'origin', 'dest', ShipmentStatus.INCOMING, new Date()));
+    // here it should be a shipment that the warehouse contains,
+    // so we should update that specific shipment, not a new shipment object.
+    if (!incoming) invSys.handleEvent(new RemoveShipmentEvent(), shipment);
 });
 
 app.listen(PORT, () => {
