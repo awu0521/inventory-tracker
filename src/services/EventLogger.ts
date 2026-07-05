@@ -7,9 +7,10 @@ export class EventLogger {
     private dateTime = new Date();
 
     log(type: EventType) {
-        process.stdout.write("INFO | ");
+        console.log("INFO | ");
         process.stdout.write(`${this.dateTime.getDate()}/${this.dateTime.getMonth()}/${this.dateTime.getFullYear()} `);
         process.stdout.write(`${this.dateTime.getHours()}:${this.dateTime.getMinutes()}:${this.dateTime.getSeconds()} | `);
-        process.stdout.write(`INFO: ${EventType[type]} |`);
+        process.stdout.write(` INFO: ${EventType[type]} |`);
+
     }
 }
