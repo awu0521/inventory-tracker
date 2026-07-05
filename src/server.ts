@@ -28,6 +28,8 @@ app.post('/sensor', (req: Request, res: Response) => {
     
     if (body.innerSensor > body.outerSensor) incoming = true;
 
+    
+
     // TODO: pass data to an adapter that converts JSON to uniform format.
     // TODO: make uniform JSON data into a Shipment object.
 

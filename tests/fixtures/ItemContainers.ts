@@ -1,4 +1,4 @@
-import { testItem2 } from "./Items";
+import { testItem2 } from "./items";
 
 export const testContainer = {
     name: 'testContainer',
