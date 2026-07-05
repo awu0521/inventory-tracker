@@ -26,12 +26,14 @@ app.post('/sensor', (req: Request, res: Response) => {
     // TODO: pass data to an adapter that converts JSON to uniform format.
     // TODO: add checks for unpopulated shipment objects
     // TODO: allow user/importer to instantiate shipments and item components.
-    let incoming: boolean = false;
+    let incoming: boolean = true;
     const body: JSON = req.body; // TODO: check if req is actually sending JSON
     
     const shipment: Shipment = parse(body);
 
     if (incoming) invSys.handleEvent(new AddShipmentEvent(), shipment);
+
+    incoming = false;
 
     // here it should be a shipment that the warehouse contains,
     // so we should update that specific shipment, not a new shipment object.
