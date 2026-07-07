@@ -7,6 +7,7 @@ import { SensorEvent } from "./SensorEvent";
 export class RemoveShipmentEvent extends SensorEvent {
 
     process(invSys: InventorySystem, shipment: Shipment): void {
+        // TODO: ensure new shipment object created matches existing shipment.
         try {
             invSys.removeShipment(shipment);
             this.logger.log(EventType.SUCCESSFUL_SHIPMENT_REMOVED);

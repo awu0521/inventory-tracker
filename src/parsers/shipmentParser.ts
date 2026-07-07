@@ -1,8 +1,10 @@
 import { ShipmentStatus } from "../domain/enums/ShipmentStatus";
 import { Shipment } from "../domain/models/Shipment";
+import { ShipmentJSON } from "../domain/types/ShipmentJSON";
+import { parseDate } from "./dateParser";
 
 // converts JSON into a shipment object with the specified attributes.
-export function parse(body: any): Shipment {
+export function parse(body: string): Shipment {
 
     try {
         JSON.parse(body);
@@ -10,23 +12,32 @@ export function parse(body: any): Shipment {
         console.log("Invalid JSON.");
     }
 
-    const parsed = JSON.parse(body);
+    const parsed: ShipmentJSON = JSON.parse(body);
 
-    let shipment: Shipment = new Shipment('name', 'origin', 'dest', ShipmentStatus.PROCESSING, new Date());
-
-    // TODO: ensure that parsed elements are not of type any.
+    let status: ShipmentStatus = ShipmentStatus.PROCESSING;
+    let name: string = '';
+    let origin: string = '';
+    let dest: string = '';
+    let deadline: Date = new Date();
 
     // checks incoming vs !incoming (outgoing)
-    if (parsed.innerSensor > parsed.outerSensor) shipment.setStatus(ShipmentStatus.INCOMING);
-    else shipment.setStatus(ShipmentStatus.OUTGOING);
-    
-    // TODO: convert JSON data into shipment object
-    // get JSON elements and set shipment attributes.
+    if (parsed.innerSensor > parsed.outerSensor) status = ShipmentStatus.INCOMING;
+    else status = ShipmentStatus.OUTGOING;
+
+    // TODO: ensure new shipment object created matches existing shipment.
+    //       consider changing inventorySystem.removeShipment() to remove shipment with simplay same name, etc.
+
+    name = parsed.name;
+    origin = parsed.origin;
+    dest = parsed.dest;
+    const deadlineNum = parseDate(parsed.deadline);
 
     // TODO: convert contents of shipment JSON data into item components inside of shipment
     // if (parsed.contents) parse item recursively (in case item is item container).
 
     // TODO: print shipment object inside of console to verify.
+
+    let shipment: Shipment = new Shipment(name, origin, dest, status, deadlineNum);
 
     return shipment;
 }

@@ -30,7 +30,7 @@ app.post('/sensor', (req: Request, res: Response) => {
         // TODO: add checks for unpopulated shipment objects
         // TODO: allow user/importer to instantiate shipments and item components.
         let incoming: boolean = false;
-        const body: any = req.body;
+        const body: string = JSON.stringify(req.body);
         const shipment: Shipment = parse(body);
 
         // NOTE: if RemoveShipmentEvent, it should be a shipment that the warehouse contains,
