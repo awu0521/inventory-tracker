@@ -14,6 +14,7 @@ export function parse(body: string): Shipment {
         console.log("Invalid JSON.");
     }
 
+
     const parsed: ShipmentJSON = JSON.parse(body);
 
     let status: ShipmentStatus = ShipmentStatus.PROCESSING;
@@ -31,16 +32,14 @@ export function parse(body: string): Shipment {
     name = parsed.name;
     origin = parsed.origin;
     dest = parsed.dest;
-    const deadlineNum = parseDate(parsed.deadline);
+    const deadlineNum: Date = parseDate(parsed.deadline);
 
     let shipment: Shipment = new Shipment(name, origin, dest, status, deadlineNum);
 
-    for (const component in parsed.contents) {
+    for (const component of parsed.contents) {
         let itemComponent: ItemComponent = parseComponent(component);
         shipment.add(itemComponent);
     }
-
-    // TODO: print shipment object inside of console to verify.
 
     return shipment;
 }

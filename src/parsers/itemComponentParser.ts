@@ -7,18 +7,13 @@ import { ItemComponentJSON } from "../domain/types/ItemComponentJSON";
 import { parseType } from "./itemTypeParser";
 
 // converts JSON into an ItemComponent object with the specified attributes.
-export function parseComponent(body: string): ItemComponent {
+export function parseComponent(parsed: ItemComponentJSON): ItemComponent {
 
-    try {
-        JSON.parse(body);
-    } catch (error) {
-        console.log("Invalid JSON.");
-    }
-
-    const parsed: ItemComponentJSON = JSON.parse(body);
+    console.log("parsed object:", parsed);
+    console.log("parsed.type:", parsed.type);
+    console.log("keys:", Object.keys(parsed));
 
     let name: string = '';
-    let contents: Array<ItemComponentJSON> = [];
     let weight: number = 0;
     let type: ItemType = ItemType.BULK;
     let dimensions: Dimensions = {length: 0, width: 0, height: 0};
@@ -41,12 +36,10 @@ export function parseComponent(body: string): ItemComponent {
     let itemContainer: ItemContainer = new ItemContainer(name, weight, type, dimensions, desc);
 
     // checks all item component JSON inside contents and recursively forms item components to add.
-    for (const component in parsed.contents) {
+    for (const component of parsed.contents) {
         let itemComponent: ItemComponent = parseComponent(component);
         itemContainer.add(itemComponent);
     }
 
     return itemContainer as ItemComponent;
-
-    // TODO: print shipment object inside of console to verify.
 }
