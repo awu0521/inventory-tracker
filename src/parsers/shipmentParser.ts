@@ -1,7 +1,9 @@
 import { ShipmentStatus } from "../domain/enums/ShipmentStatus";
+import { ItemComponent } from "../domain/models/ItemComponent";
 import { Shipment } from "../domain/models/Shipment";
 import { ShipmentJSON } from "../domain/types/ShipmentJSON";
 import { parseDate } from "./dateParser";
+import { parseComponent } from "./itemComponentParser";
 
 // converts JSON into a shipment object with the specified attributes.
 export function parse(body: string): Shipment {
@@ -18,7 +20,6 @@ export function parse(body: string): Shipment {
     let name: string = '';
     let origin: string = '';
     let dest: string = '';
-    let deadline: Date = new Date();
 
     // checks incoming vs !incoming (outgoing)
     if (parsed.innerSensor > parsed.outerSensor) status = ShipmentStatus.INCOMING;
@@ -32,12 +33,14 @@ export function parse(body: string): Shipment {
     dest = parsed.dest;
     const deadlineNum = parseDate(parsed.deadline);
 
-    // TODO: convert contents of shipment JSON data into item components inside of shipment
-    // if (parsed.contents) parse item recursively (in case item is item container).
+    let shipment: Shipment = new Shipment(name, origin, dest, status, deadlineNum);
+
+    for (const component in parsed.contents) {
+        let itemComponent: ItemComponent = parseComponent(component);
+        shipment.add(itemComponent);
+    }
 
     // TODO: print shipment object inside of console to verify.
-
-    let shipment: Shipment = new Shipment(name, origin, dest, status, deadlineNum);
 
     return shipment;
 }

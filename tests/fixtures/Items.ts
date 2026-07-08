@@ -1,5 +1,6 @@
 export const testItem1 = {
     name: 'testItem1',
+    contents: [],
     weight: 20,
     type: 'bulk',
     dimensions: {
@@ -11,6 +12,7 @@ export const testItem1 = {
 
 export const testItem2 = {
     name: 'testItem2',
+    contents: [],
     weight: 5,
     type: 'organic',
     dimensions: {
