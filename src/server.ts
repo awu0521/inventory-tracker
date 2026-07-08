@@ -31,7 +31,10 @@ app.post('/sensor', (req: Request, res: Response) => {
         // TODO: allow user/importer to instantiate shipments and item components.
         let incoming: boolean = false;
         const body: string = JSON.stringify(req.body);
+
         const shipment: Shipment = parse(body);
+
+        console.log(shipment.getName());
 
         // NOTE: if RemoveShipmentEvent, it should be a shipment that the warehouse contains,
         // so we should update that specific shipment, not a new shipment object.

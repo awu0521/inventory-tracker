@@ -1,8 +1,10 @@
+import { ItemComponentJSON } from "./ItemComponentJSON";
+
 export interface ShipmentJSON {
         innerSensor: number,
         outerSensor: number,
         name: string,
-        contents: Array<JSON>,
+        contents: Array<ItemComponentJSON>,
         origin: string,
         dest: string,
         status: string,
