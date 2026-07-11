@@ -32,7 +32,10 @@ export function parse(body: string): Shipment {
     name = parsed.name;
     origin = parsed.origin;
     dest = parsed.dest;
-    const deadlineNum: Date = parseDate(parsed.deadline);
+    let deadlineNum: Date = new Date();
+    try {
+        deadlineNum = parseDate(parsed.deadline);
+    } catch (e) {}
 
     let shipment: Shipment = new Shipment(name, origin, dest, status, deadlineNum);
 

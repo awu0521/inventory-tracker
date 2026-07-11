@@ -1,13 +1,15 @@
+import { InvalidDateError } from "../domain/errors/InvalidDateError";
+
 export function parseDate(date: string) {
-    const year = Number(date.substring(0, 1));
-    const month = Number(date.substring(3, 4));
-    const day = Number(date.substring(6, 7));
+    if (date.length !== 10) throw new InvalidDateError("Date is of the wrong number of elements.");
 
-    let deadline: Date = new Date();
+    const year = Number(date.substring(0, 4));
+    const month = Number(date.substring(5, 7)) - 1;
+    const day = Number(date.substring(8, 10));
 
-    deadline.setFullYear(year);
-    deadline.setMonth(month);
-    deadline.setDate(day);
+    if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
+        throw new InvalidDateError("Added date cannot be converted into a valid date.");
+    }
 
-    return deadline;
+    return new Date(year, month, day);
 }

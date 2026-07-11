@@ -15,7 +15,7 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
             origin: 'testOrigin',
             dest: 'testDest',
             status: 'incoming',
-            deadline: '00/00/00'
+            deadline: '0000/00/00'
         }),
             headers: {
                 'Content-Type': 'application/json',
