@@ -37,4 +37,8 @@ export abstract class ItemComponent {
         return this.desc ? this.desc : "No description provided.";
     }
 
+    setType(type: ItemType): void {
+        this.type = type;
+    }
+
 }
