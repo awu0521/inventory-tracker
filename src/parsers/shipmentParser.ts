@@ -14,7 +14,6 @@ export function parse(body: string): Shipment {
         console.log("Invalid JSON.");
     }
 
-
     const parsed: ShipmentJSON = JSON.parse(body);
 
     let status: ShipmentStatus = ShipmentStatus.PROCESSING;
@@ -39,6 +38,7 @@ export function parse(body: string): Shipment {
 
     let shipment: Shipment = new Shipment(name, origin, dest, status, deadlineNum);
 
+    // TODO: in test suite, add test for malformed ItemComponentJSON
     for (const component of parsed.contents) {
         let itemComponent: ItemComponent = parseComponent(component);
         shipment.add(itemComponent);
