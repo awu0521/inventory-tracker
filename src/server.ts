@@ -32,7 +32,9 @@ app.post('/sensor', (req: Request, res: Response) => {
         // TODO: allow user/importer to instantiate shipments and item components.
         let incoming: boolean = false;
 
-        const shipment: Shipment = parseShipment(req.body);
+        let shipment: Shipment = parseShipment(req.body);
+        // if invSys already contains a shipment of that name, the shipment is outgoing
+        invSys.setShipmentStatus(shipment);
 
         if (shipment.getStatus() === ShipmentStatus.INCOMING) incoming = true;
 

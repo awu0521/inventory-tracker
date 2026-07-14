@@ -7,9 +7,9 @@ import { SensorEvent } from "./SensorEvent";
 export class RemoveShipmentEvent extends SensorEvent {
 
     process(invSys: InventorySystem, shipment: Shipment): void {
-        // TODO: ensure new shipment object created matches existing shipment.
         try {
             for (const addedShipment of invSys.getShipments()) {
+                // TODO: determine stronger equality check than name
                 if (shipment.getName() === addedShipment.getName())  {
                     invSys.removeShipment(addedShipment);
                     this.logger.log(EventType.SUCCESSFUL_SHIPMENT_REMOVED);

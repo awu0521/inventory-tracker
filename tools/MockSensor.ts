@@ -3,20 +3,18 @@ import { testItem1 } from "../tests/fixtures/items";
 
 const PORT: string = 'http://localhost:3000/sensor';
 
-async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
+async function moveShipment() {
     try {
         const response = await fetch(PORT, {
             method: 'POST',
             body: JSON.stringify({
-            innerSensor: innerSensorTime,
-            outerSensor: outerSensorTime,
-            name: 'testShipment',
-            contents: [testItem1, testContainer1],
-            origin: 'testOrigin',
-            dest: 'testDest',
-            status: 'incoming',
-            deadline: '0000/00/00'
-        }),
+                name: 'testShipment',
+                contents: [testItem1, testContainer1],
+                origin: 'testOrigin',
+                dest: 'testDest',
+                status: 'incoming',
+                deadline: '0000/00/00'
+            }),
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
@@ -41,8 +39,8 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
 }
 
 async function main() {
-    await moveShipment(10, 0); // incoming Shipment
-    await moveShipment(0, 10); // outgoing Shipment
+    await moveShipment(); // incoming Shipment
+    await moveShipment(); // outgoing Shipment
 }
 
 main();

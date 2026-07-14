@@ -13,17 +13,10 @@ export function parseShipment(body: any): Shipment {
 
     const parsed: ShipmentJSON = body as ShipmentJSON;
 
-    let status: ShipmentStatus = ShipmentStatus.PROCESSING;
+    let status: ShipmentStatus = ShipmentStatus.INCOMING;
     let name: string = '';
     let origin: string = '';
     let dest: string = '';
-
-    // checks incoming vs !incoming (outgoing)
-    if (parsed.innerSensor > parsed.outerSensor) status = ShipmentStatus.INCOMING;
-    else status = ShipmentStatus.OUTGOING;
-
-    // TODO: ensure new shipment object created matches existing shipment.
-    //       consider changing inventorySystem.removeShipment() to remove shipment with simplay same name, etc.
 
     name = parsed.name;
     origin = parsed.origin;
@@ -46,8 +39,6 @@ export function parseShipment(body: any): Shipment {
 
 function isShipmentJSON(body: any): boolean {
     return body &&
-        typeof body.innerSensor === "number" &&
-        typeof body.outerSensor === "number" &&
         typeof body.name === "string" &&
         Array.isArray(body.contents) &&
         typeof body.origin === "string" &&
