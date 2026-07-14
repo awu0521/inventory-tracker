@@ -23,30 +23,25 @@ void loop()
   // Search card, return card types
   if (rfid.findCard(PICC_REQIDL, str) == MI_OK)
   {
-    Serial.println("Find the card!");
-    // Show card type
-    ShowCardType(str);
-
     // Anti-collision detection, read card serial number
     if (rfid.anticoll(str) == MI_OK)
     {
-      Serial.print("The card's number is : ");
 
-      // Display card serial number
+      // Print the UID in a clean, standard Hex string format
       for (int i = 0; i < 4; i++)
       {
-        Serial.print(0x0F & (str[i] >> 4), HEX);
-        Serial.print(0x0F & str[i], HEX);
+        if (str[i] < 0x10)
+          Serial.print("0");
+        Serial.print(str[i], HEX);
       }
+      Serial.println(); 
 
-      Serial.println("");
+      // Card selection to lock the card and prevent spamming reads
+      rfid.selectTag(str);
     }
-
-    // card selection (lock card to prevent redundant read, removing the line will make the sketch read cards continually)
-    rfid.selectTag(str);
   }
-
   rfid.halt();
+  delay(500);
 }
 
 void ShowCardType(unsigned char *type)
@@ -65,3 +60,12 @@ void ShowCardType(unsigned char *type)
   else
     Serial.println("Unknown");
 }
+
+/*68E546F3
+F3E28604
+78B208F3
+35FFE9EA
+451E7FEA
+784B42F3
+EAB04D32
+35536B05*/
