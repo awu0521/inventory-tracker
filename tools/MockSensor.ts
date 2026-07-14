@@ -8,13 +8,13 @@ async function moveShipment() {
         const response = await fetch(PORT, {
             method: 'POST',
             body: JSON.stringify({
-            name: 'testShipment',
-            contents: [testItem1, testContainer1],
-            origin: 'testOrigin',
-            dest: 'testDest',
-            status: 'incoming',
-            deadline: '0000/00/00'
-        }),
+                name: 'testShipment',
+                contents: [testItem1, testContainer1],
+                origin: 'testOrigin',
+                dest: 'testDest',
+                status: 'incoming',
+                deadline: '0000/00/00'
+            }),
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',

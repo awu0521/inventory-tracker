@@ -1,3 +1,4 @@
+import { ShipmentStatus } from "../enums/ShipmentStatus";
 import { DuplicateError } from "../errors/DuplicateError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { SensorEvent } from "../events/SensorEvent";
@@ -79,6 +80,17 @@ export class InventorySystem {
 
     getWareHouse(): Warehouse {
         return this.warehouse;
+    }
+
+    setShipmentStatus(shipment: Shipment) {
+        shipment.setStatus(ShipmentStatus.INCOMING);
+
+        for (const addedShipment of this.getShipments()) {
+            // TODO: determine stronger equality check than name
+            if (shipment.getName() === addedShipment.getName())  {
+                shipment.setStatus(ShipmentStatus.OUTGOING);
+            }
+        }
     }
 }
 

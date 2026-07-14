@@ -33,15 +33,8 @@ app.post('/sensor', (req: Request, res: Response) => {
         let incoming: boolean = false;
 
         let shipment: Shipment = parseShipment(req.body);
-
-        shipment.setStatus(ShipmentStatus.INCOMING);
         // if invSys already contains a shipment of that name, the shipment is outgoing
-        for (const addedShipment of invSys.getShipments()) {
-            // TODO: determine stronger equality check than name
-            if (shipment.getName() === addedShipment.getName())  {
-                shipment.setStatus(ShipmentStatus.OUTGOING);
-            }
-        }
+        invSys.setShipmentStatus(shipment);
 
         if (shipment.getStatus() === ShipmentStatus.INCOMING) incoming = true;
 
