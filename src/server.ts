@@ -3,8 +3,9 @@ import { RemoveShipmentEvent } from "./domain/events/RemoveShipmentEvent";
 import { InventorySystem } from "./domain/inventory/InventorySystem";
 import { Shipment } from "./domain/models/Shipment";
 import type { Request, Response } from "express";
-import { parse } from "./parsers/shipmentParser";
+import { parseShipment } from "./parsers/shipmentParser";
 import { SensorEvent } from "./domain/events/SensorEvent";
+import { ShipmentStatus } from "./domain/enums/ShipmentStatus";
 
 const express = require('express');
 const app = express();
@@ -30,9 +31,10 @@ app.post('/sensor', (req: Request, res: Response) => {
         // TODO: add checks for unpopulated shipment objects
         // TODO: allow user/importer to instantiate shipments and item components.
         let incoming: boolean = false;
-        const body: string = JSON.stringify(req.body);
 
-        const shipment: Shipment = parse(body);
+        const shipment: Shipment = parseShipment(req.body);
+
+        if (shipment.getStatus() === ShipmentStatus.INCOMING) incoming = true;
 
         console.log(shipment.getName());
 
