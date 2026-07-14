@@ -36,14 +36,14 @@ app.post('/sensor', (req: Request, res: Response) => {
 
         if (shipment.getStatus() === ShipmentStatus.INCOMING) incoming = true;
 
-        console.log(shipment.getName());
-
         // NOTE: if RemoveShipmentEvent, it should be a shipment that the warehouse contains,
         // so we should update that specific shipment, not a new shipment object.
         const event: SensorEvent = incoming ? new AddShipmentEvent() : new RemoveShipmentEvent();
 
         invSys.handleEvent(event, shipment);
         res.status(200).json({ message: 'Shipment processed successfully' });
+
+        console.log(invSys.getShipments());
     } catch (error) {
         console.error('Error on /sensor endpoint:', error);
         res.status(500).json({ error: (error as Error).message });
