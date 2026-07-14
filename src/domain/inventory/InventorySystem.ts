@@ -7,7 +7,7 @@ import { ItemComponent } from "../models/ItemComponent";
 import { Shipment } from "../models/Shipment";
 import { Warehouse } from "../models/Warehouse";
 
-// contains all permissable actions that can be done on the inventory.
+// contains all permissible actions that can be done on the inventory.
 export class InventorySystem {
     private warehouse: Warehouse;
 
@@ -17,7 +17,6 @@ export class InventorySystem {
 
     // the server calls on the InventorySystem to handle an update with
     // a specific event instance.
-    // TODO: resolve what shipment to pass into process here.
     handleEvent(event: SensorEvent, shipment: Shipment): void {
         event.process(this, shipment);
     }
@@ -31,7 +30,6 @@ export class InventorySystem {
 
     // cannot add duplicate components
     // throws DuplicateItemError if item component or shipment already added
-    // TODO: consider adding Shipment ID attribute to pass ID rather than Shipment object.
     addComponentToShipment(component: ItemComponent, shipment: Shipment): void {
         if (shipment.getContents().indexOf(component) === -1) shipment.add(component);
         else throw new DuplicateError('Cannot add duplicate item components.');
@@ -41,20 +39,18 @@ export class InventorySystem {
     removeShipment(shipment: Shipment): void {
         const index = this.warehouse.getStorage().indexOf(shipment);
         
-        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        if (index === -1) throw new NotFoundError('Cannot remove un-added item component.');
         else this.warehouse.remove(shipment);
     }
 
     // throws NotFoundError if item component or shipment not added
-    // TODO: consider adding Shipment ID attribute to pass ID rather than Shipment object.
     removeComponentFromShipment(component: ItemComponent, shipment: Shipment): void {
         const index = shipment.getContents().indexOf(component);
         
-        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        if (index === -1) throw new NotFoundError('Cannot remove un-added item component.');
         else shipment.remove(component);
     }
 
-    // TODO: consider adding Shipment ID attribute to pass ID rather than Shipment object.
     getShipment(shipment: Shipment): Shipment {
         return shipment;
     }
@@ -96,7 +92,7 @@ export class InventorySystem {
 }
 
 // SensorEvent (interface) defines the sub-SensorEvent
-// types (e.g. AddShipmenetEvent, AddItemEvent),
+// types (e.g. AddShipmentEvent, AddItemEvent),
 // and will have different implementations of inventory.process(this).
 // The sub-Event types will call inventory.fn() for whatever action they
 // describe inside of their process() function.
