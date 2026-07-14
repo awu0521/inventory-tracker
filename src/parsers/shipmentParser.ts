@@ -1,4 +1,5 @@
 import { ShipmentStatus } from "../domain/enums/ShipmentStatus";
+import { InvalidShipmentError } from "../domain/errors/InvalidShipmentError";
 import { ItemComponent } from "../domain/models/ItemComponent";
 import { Shipment } from "../domain/models/Shipment";
 import { ShipmentJSON } from "../domain/types/ShipmentJSON";
@@ -6,15 +7,11 @@ import { parseDate } from "./dateParser";
 import { parseComponent } from "./itemComponentParser";
 
 // converts JSON into a shipment object with the specified attributes.
-export function parse(body: string): Shipment {
+export function parseShipment(body: any): Shipment {
 
-    try {
-        JSON.parse(body);
-    } catch (error) {
-        console.log("Invalid JSON.");
-    }
+    if (!isShipmentJSON(body)) throw new InvalidShipmentError("Not valid Shipment JSON");
 
-    const parsed: ShipmentJSON = JSON.parse(body);
+    const parsed: ShipmentJSON = body as ShipmentJSON;
 
     let status: ShipmentStatus = ShipmentStatus.PROCESSING;
     let name: string = '';
@@ -45,4 +42,16 @@ export function parse(body: string): Shipment {
     }
 
     return shipment;
+}
+
+function isShipmentJSON(body: any): boolean {
+    return body &&
+        typeof body.innerSensor === "number" &&
+        typeof body.outerSensor === "number" &&
+        typeof body.name === "string" &&
+        Array.isArray(body.contents) &&
+        typeof body.origin === "string" &&
+        typeof body.dest === "string" &&
+        typeof body.status === "string" &&
+        typeof body.deadline === "string";
 }

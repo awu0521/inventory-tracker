@@ -21,3 +21,7 @@ export const testItem2 = {
         height: 3},
     desc: 'testDesc3'
 }
+
+export const invalidItem = {
+    valid: false
+}

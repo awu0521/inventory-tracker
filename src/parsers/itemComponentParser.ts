@@ -1,4 +1,5 @@
 import { ItemType } from "../domain/enums/ItemType";
+import { InvalidComponentError } from "../domain/errors/InvalidComponentError";
 import { Item } from "../domain/models/Item";
 import { ItemComponent } from "../domain/models/ItemComponent";
 import { ItemContainer } from "../domain/models/ItemContainer";
@@ -7,7 +8,12 @@ import { ItemComponentJSON } from "../domain/types/ItemComponentJSON";
 import { parseType } from "./itemTypeParser";
 
 // converts JSON into an ItemComponent object with the specified attributes.
-export function parseComponent(parsed: ItemComponentJSON): ItemComponent {
+export function parseComponent(body: any): ItemComponent {
+
+    if (!isItemComponentJSON(body)) throw new InvalidComponentError("Not valid Item Component JSON");
+
+    const parsed: ItemComponentJSON = body as ItemComponentJSON;
+
     let name: string = parsed.name;
     let weight: number = parsed.weight;
     let type: ItemType = parseType(parsed.type);
@@ -26,4 +32,16 @@ export function parseComponent(parsed: ItemComponentJSON): ItemComponent {
     }
 
     return itemContainer as ItemComponent;
+}
+
+function isItemComponentJSON(body: any): boolean {
+    return body &&
+        typeof body.name === "string" &&
+        Array.isArray(body.contents) &&
+        typeof body.weight === "number" &&
+        typeof body.type === "string" &&
+        typeof body.dimensions.length === "number" &&
+        typeof body.dimensions.width === "number" &&
+        typeof body.dimensions.height === "number" &&
+        typeof body.desc === "string";
 }

@@ -1,4 +1,4 @@
-import { testItem1, testItem2 } from "../fixtures/items";
+import { invalidItem, testItem1, testItem2 } from "../fixtures/items";
 import { parseComponent } from "../../src/parsers/itemComponentParser";
 import { Item } from "../../src/domain/models/Item";
 import { expect } from "chai";
@@ -8,6 +8,13 @@ import { ItemContainer } from "../../src/domain/models/ItemContainer";
 import { parseType } from "../../src/parsers/itemTypeParser";
 
 describe('itemComponentParser', () => {
+
+    it('should throw when parsing invalid Item Component JSON ', () => {
+        try {
+            parseComponent(invalidItem);
+            expect.fail('Should have thrown.');
+        } catch (e) {}
+    });
 
     it('should parse correct Item JSON ', () => {
         const item: Item = parseComponent(testItem1);

@@ -1,4 +1,4 @@
-import { testContainer } from "../tests/fixtures/itemContainers";
+import { testContainer1 } from "../tests/fixtures/itemContainers";
 import { testItem1 } from "../tests/fixtures/items";
 
 const PORT: string = 'http://localhost:3000/sensor';
@@ -11,7 +11,7 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
             innerSensor: innerSensorTime,
             outerSensor: outerSensorTime,
             name: 'testShipment',
-            contents: [testItem1, testContainer],
+            contents: [testItem1, testContainer1],
             origin: 'testOrigin',
             dest: 'testDest',
             status: 'incoming',
