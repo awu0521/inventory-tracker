@@ -1,3 +1,4 @@
+import isEqual from "lodash.isequal";
 import { ShipmentStatus } from "../enums/ShipmentStatus";
 import { DuplicateError } from "../errors/DuplicateError";
 import { NotFoundError } from "../errors/NotFoundError";
@@ -87,7 +88,7 @@ export class InventorySystem {
 
         for (const addedShipment of this.getShipments()) {
             // TODO: determine stronger equality check than name
-            if (shipment.getName() === addedShipment.getName())  {
+            if (isEqual(shipment, addedShipment))  {
                 shipment.setStatus(ShipmentStatus.OUTGOING);
             }
         }
