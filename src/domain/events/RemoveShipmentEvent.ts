@@ -9,8 +9,14 @@ export class RemoveShipmentEvent extends SensorEvent {
     process(invSys: InventorySystem, shipment: Shipment): void {
         // TODO: ensure new shipment object created matches existing shipment.
         try {
-            invSys.removeShipment(shipment);
-            this.logger.log(EventType.SUCCESSFUL_SHIPMENT_REMOVED);
+            for (const addedShipment of invSys.getShipments()) {
+                if (shipment.getName() === addedShipment.getName())  {
+                    invSys.removeShipment(addedShipment);
+                    this.logger.log(EventType.SUCCESSFUL_SHIPMENT_REMOVED);
+                    return;
+                }
+            }
+            this.logger.log(EventType.FAILED_NO_SHIPMENT_FOUND);
         } catch (e) {
             this.logger.log(EventType.FAILED_SHIPMENT_REMOVED);
         }
