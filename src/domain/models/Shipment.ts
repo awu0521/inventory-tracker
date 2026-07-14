@@ -38,7 +38,8 @@ export class Shipment {
 
     // cannot update the status to incoming
     setStatus(status: ShipmentStatus): void {
-        if (status === ShipmentStatus.INCOMING) throw new InvalidStatusError('Cannot revert status to INCOMING.');
+        if (this.status !== ShipmentStatus.INCOMING &&
+            status === ShipmentStatus.INCOMING) throw new InvalidStatusError('Cannot revert status to INCOMING.');
         else this.status = status;
     }
 

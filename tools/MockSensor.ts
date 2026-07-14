@@ -8,8 +8,6 @@ async function moveShipment(innerSensorTime: number, outerSensorTime: number) {
         const response = await fetch(PORT, {
             method: 'POST',
             body: JSON.stringify({
-            innerSensor: innerSensorTime,
-            outerSensor: outerSensorTime,
             name: 'testShipment',
             contents: [testItem1, testContainer1],
             origin: 'testOrigin',
