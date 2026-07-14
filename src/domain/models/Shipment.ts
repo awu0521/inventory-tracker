@@ -32,7 +32,7 @@ export class Shipment {
     remove(component: ItemComponent): void {
         const index = this.contents.indexOf(component);
 
-        if (index === -1) throw new NotFoundError('Cannot remove unadded item component.');
+        if (index === -1) throw new NotFoundError('Cannot remove un-added item component.');
         else this.contents.splice(index, 1);
     }
 
