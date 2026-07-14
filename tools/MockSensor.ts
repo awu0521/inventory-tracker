@@ -1,11 +1,11 @@
 import { testContainer1 } from "../tests/fixtures/itemContainers";
 import { testItem1 } from "../tests/fixtures/items";
 
-const PORT: string = 'http://localhost:3000/sensor';
+const ENDPOINT: string = 'http://localhost:3000/sensor';
 
 async function moveShipment() {
     try {
-        const response = await fetch(PORT, {
+        const response = await fetch(ENDPOINT, {
             method: 'POST',
             body: JSON.stringify({
                 name: 'testShipment',
