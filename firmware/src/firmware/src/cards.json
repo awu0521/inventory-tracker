@@ -1,0 +1,44 @@
+[
+    {
+        "uid": "78B208F3",
+        "timestamp": "2026-07-14 14:37:52",
+        "shipmentData": {
+            "name": "testShipment",
+            "contents": [
+                {
+                    "id": "testItem1",
+                    "type": "item"
+                },
+                {
+                    "id": "testContainer1",
+                    "type": "container"
+                }
+            ],
+            "origin": "testOrigin",
+            "dest": "testDest",
+            "status": "detected",
+            "deadline": "0000/00/00"
+        }
+    },
+    {
+        "uid": "78B208F3",
+        "timestamp": "2026-07-14 14:37:57",
+        "shipmentData": {
+            "name": "testShipment",
+            "contents": [
+                {
+                    "id": "testItem1",
+                    "type": "item"
+                },
+                {
+                    "id": "testContainer1",
+                    "type": "container"
+                }
+            ],
+            "origin": "testOrigin",
+            "dest": "testDest",
+            "status": "detected",
+            "deadline": "0000/00/00"
+        }
+    }
+]
