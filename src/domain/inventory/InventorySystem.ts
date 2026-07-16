@@ -79,15 +79,18 @@ export class InventorySystem {
         return this.warehouse;
     }
 
-    setShipmentStatus(shipment: Shipment) {
+    isSameShipment(shipment: Shipment): boolean {
         shipment.setStatus(ShipmentStatus.INCOMING);
 
+        // must set shipment status to outgoing if shipments are equal
         for (const addedShipment of this.getShipments()) {
-            // TODO: determine stronger equality check than name
             if (isEqual(shipment, addedShipment))  {
                 shipment.setStatus(ShipmentStatus.OUTGOING);
+                return true;
             }
         }
+
+        return false;
     }
 }
 

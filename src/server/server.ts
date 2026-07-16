@@ -1,11 +1,11 @@
-import { AddShipmentEvent } from "./domain/events/AddShipmentEvent";
-import { RemoveShipmentEvent } from "./domain/events/RemoveShipmentEvent";
-import { InventorySystem } from "./domain/inventory/InventorySystem";
-import { Shipment } from "./domain/models/Shipment";
+import { AddShipmentEvent } from "../domain/events/AddShipmentEvent";
+import { RemoveShipmentEvent } from "../domain/events/RemoveShipmentEvent";
+import { InventorySystem } from "../domain/inventory/InventorySystem";
+import { Shipment } from "../domain/models/Shipment";
 import type { Request, Response } from "express";
-import { parseShipment } from "./parsers/shipmentParser";
-import { SensorEvent } from "./domain/events/SensorEvent";
-import { ShipmentStatus } from "./domain/enums/ShipmentStatus";
+import { parseShipment } from "../parsers/shipmentParser";
+import { SensorEvent } from "../domain/events/SensorEvent";
+import { ShipmentStatus } from "../domain/enums/ShipmentStatus";
 
 const express = require('express');
 const app = express();
@@ -30,17 +30,15 @@ app.post('/sensor', (req: Request, res: Response) => {
         // TODO: pass data to an adapter that converts JSON to uniform format.
         // TODO: add checks for unpopulated shipment objects
         // TODO: allow user/importer to instantiate shipments and item components.
-        let incoming: boolean = false;
+        let outgoing: boolean = false;
 
         let shipment: Shipment = parseShipment(req.body);
         // if invSys already contains a shipment of that name, the shipment is outgoing
-        invSys.setShipmentStatus(shipment);
-
-        if (shipment.getStatus() === ShipmentStatus.INCOMING) incoming = true;
+        outgoing = invSys.isSameShipment(shipment);
 
         // NOTE: if RemoveShipmentEvent, it should be a shipment that the warehouse contains,
         // so we should update that specific shipment, not a new shipment object.
-        const event: SensorEvent = incoming ? new AddShipmentEvent() : new RemoveShipmentEvent();
+        const event: SensorEvent = outgoing ? new RemoveShipmentEvent() : new AddShipmentEvent();
 
         invSys.handleEvent(event, shipment);
         res.status(200).json({ message: 'Shipment processed successfully' });
