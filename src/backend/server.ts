@@ -41,6 +41,10 @@ app.post('/sensor', (req: Request, res: Response) => {
         const event: SensorEvent = outgoing ? new RemoveShipmentEvent() : new AddShipmentEvent();
 
         invSys.handleEvent(event, shipment);
+
+        if (outgoing) shipment.setStatus(ShipmentStatus.OUTGOING);
+        else shipment.setStatus(ShipmentStatus.INCOMING);
+        
         res.status(200).json({ message: 'Shipment processed successfully' });
 
         console.log(invSys.getShipments());
