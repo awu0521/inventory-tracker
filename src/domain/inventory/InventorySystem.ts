@@ -51,6 +51,7 @@ export class InventorySystem {
         else shipment.remove(component);
     }
 
+    // TODO: add getComponent/ShipmentByName function to allow for frontend search functionality.
     getShipment(shipment: Shipment): Shipment {
         return shipment;
     }
