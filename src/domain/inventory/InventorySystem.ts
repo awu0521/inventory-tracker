@@ -51,6 +51,7 @@ export class InventorySystem {
         else shipment.remove(component);
     }
 
+    // TODO: add getComponent/ShipmentByName function to allow for frontend search functionality.
     getShipment(shipment: Shipment): Shipment {
         return shipment;
     }
@@ -79,15 +80,16 @@ export class InventorySystem {
         return this.warehouse;
     }
 
-    setShipmentStatus(shipment: Shipment) {
+    isSameShipment(shipment: Shipment): boolean {
         shipment.setStatus(ShipmentStatus.INCOMING);
 
         for (const addedShipment of this.getShipments()) {
-            // TODO: determine stronger equality check than name
             if (isEqual(shipment, addedShipment))  {
-                shipment.setStatus(ShipmentStatus.OUTGOING);
+                return true;
             }
         }
+
+        return false;
     }
 }
 

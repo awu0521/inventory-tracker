@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha -r ts-node/register/transpile-only \"tests/**/*.ts\"",
     "coverage": "c8 mocha -r ts-node/register/transpile-only \"tests/**/*.ts\"",
-    "dev": "ts-node src/server.ts",
+    "dev": "ts-node src/backend/src/server.ts",
     "simulate": "ts-node tools/MockSensor.ts"
   },
   "repository": {
@@ -26,6 +26,7 @@
   "homepage": "https://github.com/awu0521/inventory-tracker#readme",
   "devDependencies": {
     "@types/chai": "^5.2.3",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/lodash.isequal": "^4.5.8",
     "@types/mocha": "^10.0.10",
@@ -37,6 +38,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "lodash.isequal": "^4.5.0"
   }
