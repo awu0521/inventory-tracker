@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const BACKEND_PORT = "http://localhost:3000";
 
@@ -18,13 +19,13 @@ function App() {
     }, []);
 
     return (
-        <div>
-            <Home />
-             <div>
-                {array}
-                </div>
-        </div>
-        
+        // add <Routes> {path} </Routes> inside of Browser Router to add more pages
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </BrowserRouter>
+        // {array}
     );
 }
 
