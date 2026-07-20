@@ -25,19 +25,19 @@ function App() {
     }, []);
 
     return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/component-reg" element={<ComponentReg />} />
-          <Route path="/shipment-reg" element={<ShipmentReg />} />
-          <Route path="/sensor-reg" element={<SensorReg />} />
-          <Route path="/components-view" element={<ItemComponents />} />
-          <Route path="/shipments-view" element={<Shipments />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+        <BrowserRouter>
+            <Routes>
+                <Route element={<Layout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/component-reg" element={<ComponentReg />} />
+                    <Route path="/shipment-reg" element={<ShipmentReg />} />
+                    <Route path="/sensor-reg" element={<SensorReg />} />
+                    <Route path="/components-view" element={<ItemComponents />} />
+                    <Route path="/shipments-view" element={<Shipments />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App
