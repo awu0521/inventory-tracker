@@ -65,6 +65,14 @@ app.get("/api/components", (req: Request, res: Response) => {
   res.json(components);
 });
 
+app.get("/api/shipments", (req: Request, res: Response) => {
+  const shipments = invSys.getShipments();
+  
+  console.log("Backend shipments:", shipments);
+  
+  res.json(shipments);
+});
+
 app.listen(PORT, () => {
   console.log('Server running on port', {PORT}.PORT);
 });
