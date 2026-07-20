@@ -60,6 +60,11 @@ app.post('/sensor', (req: Request, res: Response) => {
     }
 });
 
+app.get("/api/components", (req: Request, res: Response) => {
+  const components = invSys.getComponents();
+  res.json(components);
+});
+
 app.listen(PORT, () => {
   console.log('Server running on port', {PORT}.PORT);
 });

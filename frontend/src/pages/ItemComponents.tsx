@@ -1,21 +1,86 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+const itemTypeNames: Record<number, string> = {
+  0: "FRAGILE",
+  1: "ORGANIC",
+  2: "DOCUMENT",
+  3: "BULK",
+};
 
 function ItemComponents() {
-  const navigate = useNavigate();
+  const [components, setComponents] = useState<any[]>([]);
 
-  const handleClick = (buttonName: string) => {
-    console.log(`${buttonName} clicked`);
-  };
+  useEffect(() => {
+    fetch("http://localhost:3000/api/components")
+      .then((response) => response.json())
+      .then((data) => {
+        setComponents(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching components:", error);
+      });
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 py-20">
-      <div className="flex flex-wrap justify-center gap-6">
-        <button
-          onClick={() => handleClick("Test")}
-          className="w-64 rounded-xl bg-white p-6 text-lg font-semibold shadow-md hover:shadow-xl hover:bg-gray-50 transition-all"
-        >
-          Test 4
-        </button>
+    <div className="flex flex-col items-center gap-8 py-20">
+      <h1 className="text-3xl font-bold">
+        Item Components
+      </h1>
+
+      <div className="w-3/4 rounded-xl bg-white shadow-md p-6">
+        {components.length === 0 ? (
+          <p className="text-gray-500">
+            No components found
+          </p>
+        ) : (
+          <ul className="space-y-4">
+            {components.map((component, index) => (
+              <li
+                key={index}
+                className="rounded-lg border p-4 hover:bg-gray-50"
+              >
+                <p className="font-semibold text-lg">
+                  {component.name}
+                </p>
+
+                <p>
+                  Type: {itemTypeNames[component.type]}
+                </p>
+
+                <p>
+                  Description: {component.desc}
+                </p>
+
+                <p>
+                  Weight: {component.weight}
+                </p>
+
+                <p>
+                  Dimensions:
+                  {` ${component.dimensions.length} x ${component.dimensions.width} x ${component.dimensions.height}`}
+                </p>
+
+                {/* Only displays for ItemContainers */}
+                {component.contents && (
+                  <div className="mt-4">
+                    <p className="font-semibold">
+                      Contents:
+                    </p>
+
+                    {/* TODO: fix item components of item containers not showing */}
+                    <ul className="list-disc ml-6">
+                      {component.contents.map((item: any, index: number) => (
+                        <li key={index}>
+                          {item.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
