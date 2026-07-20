@@ -9,6 +9,7 @@ const itemTypeNames: Record<number, string> = {
 
 function ItemComponents() {
   const [components, setComponents] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3000/api/components")
@@ -21,20 +22,35 @@ function ItemComponents() {
       });
   }, []);
 
+  const filteredComponents = components.filter((component) =>
+    component.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex flex-col items-center gap-8 py-20">
       <h1 className="text-3xl font-bold">
         Item Components
       </h1>
 
+      {/* Search Bar */}
+      <input
+        type="text"
+        placeholder="Search components by name..."
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        className="w-3/4 rounded-lg border p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
       <div className="w-3/4 rounded-xl bg-white shadow-md p-6">
-        {components.length === 0 ? (
+        {filteredComponents.length === 0 ? (
           <p className="text-gray-500">
             No components found
           </p>
         ) : (
           <ul className="space-y-4">
-            {components.map((component, index) => (
+            {filteredComponents.map((component, index) => (
               <li
                 key={index}
                 className="rounded-lg border p-4 hover:bg-gray-50"
@@ -42,21 +58,10 @@ function ItemComponents() {
                 <p className="font-semibold text-lg">
                   {component.name}
                 </p>
-
-                <p>
-                  Type: {itemTypeNames[component.type]}
-                </p>
-
-                <p>
-                  Description: {component.desc}
-                </p>
-
-                <p>
-                  Weight: {component.weight}
-                </p>
-
-                <p>
-                  Dimensions:
+                <p>Type: {itemTypeNames[component.type]}</p>
+                <p>Description: {component.desc}</p>
+                <p>Weight: {component.weight}</p>
+                <p>Dimensions:
                   {` ${component.dimensions.length} x ${component.dimensions.width} x ${component.dimensions.height}`}
                 </p>
 
@@ -67,8 +72,8 @@ function ItemComponents() {
                       Contents:
                     </p>
 
-                    {/* TODO: fix item components of item containers not showing */}
                     <ul className="list-disc ml-6">
+                        {/* TODO: fix components not showing for item component contents */}
                       {component.contents.map((item: any, index: number) => (
                         <li key={index}>
                           {item.name}
