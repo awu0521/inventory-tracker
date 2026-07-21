@@ -6,13 +6,19 @@ import { SensorEvent } from "../events/SensorEvent";
 import { ItemComponent } from "../models/ItemComponent";
 import { Shipment } from "../models/Shipment";
 import { Warehouse } from "../models/Warehouse";
+import { ShipmentQueue } from "./ShipmentQueue";
+import { ItemComponentQueue } from "./ItemComponentQueue";
 
 // contains all permissible actions that can be done on the inventory.
 export class InventorySystem {
     private warehouse: Warehouse;
+    private shipmentQueue: ShipmentQueue;
+    private itemComponentQueue: ItemComponentQueue;
 
     constructor(name: string, address: string) {
         this.warehouse = new Warehouse(name, address);
+        this.shipmentQueue = new ShipmentQueue();
+        this.itemComponentQueue = new ItemComponentQueue();
     }
 
     // the server calls on the InventorySystem to handle an update with
@@ -91,6 +97,14 @@ export class InventorySystem {
 
         return false;
     }
+
+    getShipmentQueue(): ShipmentQueue {
+        return this.shipmentQueue;
+    }
+
+    getItemComponentQueue(): ItemComponentQueue {
+        return this.itemComponentQueue;
+    }
 }
 
 // SensorEvent (interface) defines the sub-SensorEvent
@@ -100,4 +114,4 @@ export class InventorySystem {
 // describe inside of their process() function.
 // The server will call inventory.handleEvent(event obj.), and then that event
 // will call process (from Event supertype) with its own impl. that
-// calls upon teh inventory system to do an action.
+// calls upon the inventory system to do an action.
