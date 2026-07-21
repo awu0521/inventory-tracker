@@ -67,10 +67,12 @@ app.get("/api/components", (req: Request, res: Response) => {
 
 app.get("/api/shipments", (req: Request, res: Response) => {
   const shipments = invSys.getShipments();
-  
-  console.log("Backend shipments:", shipments);
-  
   res.json(shipments);
+});
+
+app.get("/api/components-queue", (req: Request, res: Response) => {
+  const components = invSys.getItemComponentQueue();
+  res.json(components);
 });
 
 app.listen(PORT, () => {
