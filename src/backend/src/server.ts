@@ -6,6 +6,7 @@ import type { Request, Response } from "express";
 import { parseShipment } from "../../parsers/shipmentParser";
 import { SensorEvent } from "../../domain/events/SensorEvent";
 import { ShipmentStatus } from "../../domain/enums/ShipmentStatus";
+import { parseComponent } from "../../parsers/itemComponentParser";
 
 const cors = require("cors");
 const express = require('express');
@@ -73,6 +74,18 @@ app.get("/api/shipments", (req: Request, res: Response) => {
 app.get("/api/components-queue", (req: Request, res: Response) => {
   const components = invSys.getItemComponentQueue();
   res.json(components);
+});
+
+app.post("/api/component-reg", (req: Request, res: Response) => {
+  try {
+        const component = parseComponent(req.body);
+        invSys.getItemComponentQueue().add(component);
+        res.status(200).json(component);
+    } catch (error) {
+        res.status(400).json({
+            message: "Invalid component"
+        });
+    }
 });
 
 app.listen(PORT, () => {
