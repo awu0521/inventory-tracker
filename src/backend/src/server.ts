@@ -51,7 +51,7 @@ app.post('/sensor', (req: Request, res: Response) => {
 
         if (outgoing) shipment.setStatus(ShipmentStatus.OUTGOING);
         else shipment.setStatus(ShipmentStatus.INCOMING);
-        
+
         res.status(200).json({ message: 'Shipment processed successfully' });
 
         console.log(invSys.getShipments());
@@ -62,22 +62,25 @@ app.post('/sensor', (req: Request, res: Response) => {
 });
 
 app.get("/api/components", (req: Request, res: Response) => {
-  const components = invSys.getComponents();
-  res.json(components);
+    const components = invSys.getComponents();
+    res.json(components);
 });
 
 app.get("/api/shipments", (req: Request, res: Response) => {
-  const shipments = invSys.getShipments();
-  res.json(shipments);
+    const shipments = invSys.getShipments();
+    res.json(shipments);
 });
 
 app.get("/api/components-queue", (req: Request, res: Response) => {
-  const components = invSys.getItemComponentQueue();
-  res.json(components);
+    const components = invSys.getItemComponentQueue();
+
+    console.log("Sending:", components);
+    
+    res.json(components);
 });
 
-app.post("/api/component-reg", (req: Request, res: Response) => {
-  try {
+app.post("/api/reg-component", (req: Request, res: Response) => {
+    try {
         const component = parseComponent(req.body);
         invSys.getItemComponentQueue().add(component);
         res.status(200).json(component);
@@ -89,7 +92,7 @@ app.post("/api/component-reg", (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Server running on port', {PORT}.PORT);
+    console.log('Server running on port', { PORT }.PORT);
 });
 
 start();

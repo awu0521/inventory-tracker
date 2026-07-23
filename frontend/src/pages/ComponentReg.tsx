@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Component } from "react";
 import { itemTypeNames } from "../constants/itemTypes";
 import axios from "axios";
+
+const QUEUE_PORT = "http://localhost:3000/api/components-queue";
+const REG_PORT = "http://localhost:3000/api/reg-component";
 
 function ComponentReg() {
     const [components, setComponents] = useState<any[]>([]);
@@ -13,16 +16,19 @@ function ComponentReg() {
         dimensions: { length: 0, width: 0, height: 0 },
         desc: '',
     });
+    const [error, setError] = useState(false);
 
     const fetchComponents = async () => {
         try {
-            const response = await axios.get(
-                "http://localhost:3000/api/components-queue"
-            );
+            const response = await axios.get(QUEUE_PORT);
 
-            setComponents(response.data);
+            console.log("Response:", response.data);
+            
+            setComponents(response.data.components);
         } catch (error) {
             console.error("Error fetching components:", error);
+
+            setError(true);
         }
     };
 
@@ -37,10 +43,7 @@ function ComponentReg() {
         };
 
         try {
-            const response = await axios.post(
-                "http://localhost:3000/api/component-reg",
-                itemComponentJSON
-            );
+            const response = await axios.post(REG_PORT, itemComponentJSON);
 
             console.log("Component created:", response.data);
 
@@ -63,8 +66,21 @@ function ComponentReg() {
     );
 
     return (
-
         <div className="flex flex-col items-center gap-8 py-20">
+
+            {error && (
+                <div className="fixed top-5 right-5 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+                    <h2 className="font-bold">Oops! Something went wrong.</h2>
+                    <p>Please try again later.</p>
+                    <button
+                        className="mt-2 underline"
+                        onClick={() => setError(false)}
+                    >
+                        Close
+                    </button>
+                </div>
+            )}
+
             <h1 className="text-3xl font-bold" >
                 Item Component Registration
             </h1>
