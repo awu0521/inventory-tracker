@@ -26,7 +26,7 @@ function Shipments() {
     return (
         <div className="flex flex-col items-center gap-8 py-20">
             <h1 className="text-3xl font-bold">
-                Item Components
+                Shipments
             </h1>
 
             {/* Search Bar */}

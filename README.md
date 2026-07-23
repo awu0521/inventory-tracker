@@ -11,4 +11,8 @@ Automatic Warehouse Item Manager
 ---
 - Test server with: ```npm run simulate```.
 ---
+- Start app with:\
+```cd frontend```\
+```npm run dev```
+---
 Testing done with Mocha + Chai (c8 for coverage testing).

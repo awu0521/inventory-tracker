@@ -91,6 +91,26 @@ app.post("/api/reg-component", (req: Request, res: Response) => {
     }
 });
 
+app.get("/api/shipments-queue", (req: Request, res: Response) => {
+    const shipments = invSys.getShipmentQueue();
+
+    console.log("Sending:", shipments);
+    
+    res.json(shipments);
+});
+
+app.post("/api/reg-shipment", (req: Request, res: Response) => {
+    try {
+        const shipment = parseShipment(req.body);
+        invSys.getShipmentQueue().add(shipment);
+        res.status(200).json(shipment);
+    } catch (error) {
+        res.status(400).json({
+            message: "Invalid shipment"
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log('Server running on port', { PORT }.PORT);
 });

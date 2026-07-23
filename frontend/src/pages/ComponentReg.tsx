@@ -1,6 +1,9 @@
 import { useEffect, useState, Component } from "react";
 import { itemTypeNames } from "../constants/itemTypes";
 import axios from "axios";
+import ErrorAlert from "../components/forms/ErrorAlert";
+import {DescInput, DimensionInput, NameInput, TypeInput, WeightInput} from "../components/forms/ComponentInputs";
+import { CreateComponentButton } from "../components/forms/CreateComponentButton";
 
 const QUEUE_PORT = "http://localhost:3000/api/components-queue";
 const REG_PORT = "http://localhost:3000/api/reg-component";
@@ -8,6 +11,7 @@ const REG_PORT = "http://localhost:3000/api/reg-component";
 function ComponentReg() {
     const [components, setComponents] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [error, setError] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         contents: [],
@@ -16,7 +20,6 @@ function ComponentReg() {
         dimensions: { length: 0, width: 0, height: 0 },
         desc: '',
     });
-    const [error, setError] = useState(false);
 
     const fetchComponents = async () => {
         try {
@@ -67,161 +70,21 @@ function ComponentReg() {
 
     return (
         <div className="flex flex-col items-center gap-8 py-20">
-
-            {error && (
-                <div className="fixed top-5 right-5 bg-red-500 text-white p-4 rounded-lg shadow-lg">
-                    <h2 className="font-bold">Oops! Something went wrong.</h2>
-                    <p>Please try again later.</p>
-                    <button
-                        className="mt-2 underline"
-                        onClick={() => setError(false)}
-                    >
-                        Close
-                    </button>
-                </div>
-            )}
+            {/*&&<ErrorAlert error={error} setError={setError} />*/}
+            {error}
 
             <h1 className="text-3xl font-bold" >
                 Item Component Registration
             </h1>
             <div className="border rounded-lg p-6 shadow-md">
                 <div className="flex gap-3 py-2">
-                    <div>
-                        <label className="block">Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={(event) =>
-                                setFormData({
-                                    ...formData,
-                                    name: event.target.value,
-                                })
-                            }
-                            className="w-48 border rounded px-3 py-2"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block">Weight</label>
-                        <input
-                            type="number"
-                            name="weight"
-                            value={formData.weight}
-                            onChange={(event) =>
-                                setFormData({
-                                    ...formData,
-                                    weight: event.target.valueAsNumber,
-                                })
-                            }
-                            className="w-24 border rounded px-3 py-2"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block">{"Dimensions (L x W x H)"}</label>
-
-                        <div className="flex gap-2">
-                            <input
-                                type="number"
-                                name="length"
-                                placeholder="L"
-                                value={formData.dimensions.length}
-                                onChange={(event) =>
-                                    setFormData({
-                                        ...formData,
-                                        dimensions: {
-                                            ...formData.dimensions,
-                                            length: event.target.valueAsNumber,
-                                        },
-                                    })
-                                }
-                                className="w-20 border rounded px-3 py-2"
-                                required
-                            />
-
-                            <input
-                                type="number"
-                                name="width"
-                                placeholder="W"
-                                value={formData.dimensions.width}
-                                onChange={(event) =>
-                                    setFormData({
-                                        ...formData,
-                                        dimensions: {
-                                            ...formData.dimensions,
-                                            width: event.target.valueAsNumber,
-                                        },
-                                    })
-                                }
-                                className="w-20 border rounded px-3 py-2"
-                                required
-                            />
-
-                            <input
-                                type="number"
-                                name="height"
-                                placeholder="H"
-                                value={formData.dimensions.height}
-                                onChange={(event) =>
-                                    setFormData({
-                                        ...formData,
-                                        dimensions: {
-                                            ...formData.dimensions,
-                                            height: event.target.valueAsNumber,
-                                        },
-                                    })
-                                }
-                                className="w-20 border rounded px-3 py-2"
-                                required
-                            />
-                        </div>
-                    </div>
+                    <NameInput formData={formData} setFormData={setFormData}/>
+                    <WeightInput formData={formData} setFormData={setFormData}/>
+                    <DimensionInput formData={formData} setFormData={setFormData}/>
                 </div>
-                <div className="flex justify-center mt-5 mb-4">
-                    <label className="block">Type:</label>
-
-                    <select
-                        name="type"
-                        value={formData.type}
-                        onChange={(event) =>
-                            setFormData({
-                                ...formData,
-                                type: event.target.value,
-                            })
-                        }
-                        className="border rounded px-3 py-2"
-                    >
-                        <option value="FRAGILE">FRAGILE</option>
-                        <option value="ORGANIC">ORGANIC</option>
-                        <option value="DOCUMENT">DOCUMENT</option>
-                        <option value="BULK">BULK</option>
-                    </select>
-                </div>
-                <label className="block">{"Description (optional)"}</label>
-                <input
-                    type="text"
-                    name="desc"
-                    value={formData.desc}
-                    onChange={(event) =>
-                        setFormData({
-                            ...formData,
-                            desc: event.target.value,
-                        })
-                    }
-                    className="w-full border rounded px-3 py-1"
-                    required
-                />
-                <div className="flex justify-center mt-4">
-                    <button
-                        type="button"
-                        onClick={handleCreateComponent}
-                        className="bg-blue-500 px-4 py-2 rounded"
-                    >
-                        Create Shipment
-                    </button>
-                </div>
+                <TypeInput formData={formData} setFormData={setFormData}/>
+                <DescInput formData={formData} setFormData={setFormData}/>
+                <CreateComponentButton handleCreateComponent={handleCreateComponent}/>
             </div>
             <h1 className="text-3xl font-bold">
                 Queued Item Components
