@@ -1,7 +1,6 @@
-import { useEffect, useState, Component } from "react";
+import { useEffect, useState } from "react";
 import { itemTypeNames } from "../constants/itemTypes";
 import axios from "axios";
-import ErrorAlert from "../components/forms/ErrorAlert";
 import {DescInput, DimensionInput, isValidAttributes, NameInput, TypeInput, WeightInput} from "../components/forms/ComponentInputs";
 import { CreateComponentButton } from "../components/forms/CreateComponentButton";
 

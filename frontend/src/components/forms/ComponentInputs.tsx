@@ -192,7 +192,7 @@ export function DescInput({ formData, setFormData }: InputProps) {
     );
 }
 
-export function isValidAttributes({ formData }: FormDataProps) {
+export function isValidAttributes({ formData }: FormDataProps): boolean {
     if (formData.name.length == 0) {
         alert("Please enter name.");
         return false;

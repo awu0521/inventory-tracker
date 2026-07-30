@@ -17,6 +17,17 @@ interface InputProps {
     }>) => void;
 }
 
+interface FormDataProps {
+    formData: {
+        name: string;
+        contents: any[];
+        origin: string;
+        dest: string;
+        status: string;
+        deadline: string;
+    }
+}
+
 export function NameInput({ formData, setFormData }: InputProps) {
     return (
         <div>
@@ -126,4 +137,22 @@ export function DeadlineInput({ formData, setFormData }: InputProps) {
             />
         </div>
     );
+}
+
+export function isValidAttributes({ formData }: FormDataProps): boolean {
+    if (formData.name.length == 0) {
+        alert("Please enter name.");
+        return false;
+    } else if (formData.origin.length == 0) {
+        alert("Please enter valid origin.");
+        return false;
+    } else if (formData.dest.length == 0) {
+        alert("Please enter valid dest.");
+        return false;
+    } else if (!formData.deadline) {
+        alert("Please enter valid deadline.");
+        return false;
+    }
+
+    return true;
 }
