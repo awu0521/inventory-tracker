@@ -1,8 +1,7 @@
-import { useEffect, useState, Component } from "react";
+import { useEffect, useState } from "react";
 import { itemTypeNames } from "../constants/itemTypes";
 import axios from "axios";
-import ErrorAlert from "../components/forms/ErrorAlert";
-import {DescInput, DimensionInput, NameInput, TypeInput, WeightInput} from "../components/forms/ComponentInputs";
+import {DescInput, DimensionInput, isValidAttributes, NameInput, TypeInput, WeightInput} from "../components/forms/ComponentInputs";
 import { CreateComponentButton } from "../components/forms/CreateComponentButton";
 
 const QUEUE_PORT = "http://localhost:3000/api/components-queue";
@@ -44,6 +43,10 @@ function ComponentReg() {
             dimensions: formData.dimensions,
             desc: formData.desc,
         };
+
+        if (!isValidAttributes({ formData })) {
+            return;
+        }
 
         try {
             const response = await axios.post(REG_PORT, itemComponentJSON);

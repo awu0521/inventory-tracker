@@ -1,10 +1,9 @@
-import { useEffect, useState, Component } from "react";
-import { itemTypeNames } from "../constants/itemTypes";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import ErrorAlert from "../components/forms/ErrorAlert";
 import { NameInput, OriginInput, DestInput, StatusInput, DeadlineInput } from "../components/forms/ShipmentInputs";
 import { CreateShipmentButton } from "../components/forms/CreateShipmentButton";
 import { shipmentStatusNames } from "../constants/shipmentStatuses";
+import { isValidAttributes } from "../components/forms/ShipmentInputs";
 
 // TODO: change ports to match endpoints for grabbing and adding to shipment queue
 const QUEUE_PORT = "http://localhost:3000/api/shipments-queue";
@@ -49,6 +48,10 @@ function ShipmentReg() {
             status: formData.status,
             deadline: formData.deadline,
         };
+
+        if (!isValidAttributes({ formData })) {
+            return;
+        }
 
         try {
             const response = await axios.post(REG_PORT, shipmentJSON);

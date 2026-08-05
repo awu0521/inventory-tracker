@@ -8,6 +8,7 @@ import ShipmentReg from "./pages/ShipmentReg";
 import SensorReg from "./pages/SensorReg";
 import ItemComponents from "./pages/ItemComponents";
 import Shipments from "./pages/Shipments";
+import ComponentView from "./pages/ComponentView";
 
 const BACKEND_PORT = "http://localhost:3000";
 
@@ -34,6 +35,9 @@ function App() {
                     <Route path="/sensor-reg" element={<SensorReg />} />
                     <Route path="/components-view" element={<ItemComponents />} />
                     <Route path="/shipments-view" element={<Shipments />} />
+
+                    {/* TESTING FOR COMPONENT POPULATOR*/}
+                    <Route path="/component-view" element={<ComponentView />} />
                 </Route>
             </Routes>
         </BrowserRouter>

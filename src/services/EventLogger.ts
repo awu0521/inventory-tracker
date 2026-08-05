@@ -12,6 +12,5 @@ export class EventLogger {
         process.stdout.write(`${this.dateTime.getHours()}:${this.dateTime.getMinutes()}:${this.dateTime.getSeconds()} | `);
         process.stdout.write(` INFO: ${EventType[type]} |`);
         console.log("");
-
     }
 }

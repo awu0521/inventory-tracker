@@ -25,6 +25,21 @@ interface InputProps {
     }>) => void;
 }
 
+interface FormDataProps {
+    formData: {
+        name: string;
+        contents: any[];
+        weight: number;
+        type: string;
+        dimensions: {
+            length: number;
+            width: number;
+            height: number;
+        };
+        desc: string;
+    }
+}
+
 export function NameInput({ formData, setFormData }: InputProps) {
     return (
         <div>
@@ -57,7 +72,7 @@ export function WeightInput({ formData, setFormData }: InputProps) {
                 onChange={(event) =>
                     setFormData({
                         ...formData,
-                        weight: event.target.valueAsNumber,
+                        weight: event.target.valueAsNumber > 0 ? event.target.valueAsNumber : 0,
                     })
                 }
                 className="w-24 border rounded px-3 py-2"
@@ -83,7 +98,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
                             ...formData,
                             dimensions: {
                                 ...formData.dimensions,
-                                length: event.target.valueAsNumber,
+                                length: event.target.valueAsNumber > 0 ? event.target.valueAsNumber : 0,
                             },
                         })
                     }
@@ -101,7 +116,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
                             ...formData,
                             dimensions: {
                                 ...formData.dimensions,
-                                width: event.target.valueAsNumber,
+                                width: event.target.valueAsNumber > 0 ? event.target.valueAsNumber : 0,
                             },
                         })
                     }
@@ -119,7 +134,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
                             ...formData,
                             dimensions: {
                                 ...formData.dimensions,
-                                height: event.target.valueAsNumber,
+                                height: event.target.valueAsNumber > 0 ? event.target.valueAsNumber : 0,
                             },
                         })
                     }
@@ -175,4 +190,24 @@ export function DescInput({ formData, setFormData }: InputProps) {
             />
         </div>
     );
+}
+
+export function isValidAttributes({ formData }: FormDataProps): boolean {
+    if (formData.name.length == 0) {
+        alert("Please enter name.");
+        return false;
+    } else if (formData.weight <= 0) {
+        alert("Please enter valid weight.");
+        return false;
+    } else if (formData.dimensions.length <= 0) {
+        alert("Please enter valid length.");
+        return false;
+    } else if (formData.dimensions.width <= 0) {
+        alert("Please enter valid width.");
+        return false;
+    } else if (formData.dimensions.height <= 0) {
+        alert("Please enter valid height.");
+        return false;
+    }
+    return true;
 }
