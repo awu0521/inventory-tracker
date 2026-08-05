@@ -1,72 +1,148 @@
-#include <Arduino.h>
+#include <MFRC522.h>
 #include <SPI.h>
-#include <RFID.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
 
-#define SDA_PIN 10
-#define RST_PIN 9
+#define SS_PIN 5
+#define RST_PIN 33
 
-RFID rfid(SDA_PIN, RST_PIN);
-unsigned char status;
-unsigned char str[MAX_LEN]; // MAX_LEN = 16 bytes
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+MFRC522::MIFARE_Key key;
 
+// WiFi credentials
+const char *ssid = "[WIFI USERNAME]";
+const char *password = "[WIFI PASSWORD]";
+
+// Local server endpoint
+const char *serverUrl = "http://[COMPUTER IP ADDRESS]:[PORT NUMBER]/sensor";
+
+// Usable data blocks (skips sector 0 and all trailer blocks)
+byte dataBlocks[] = {
+    4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 21, 22,
+    24, 25, 26, 28, 29, 30, 32, 33, 34, 36, 37, 38, 40, 41, 42,
+    44, 45, 46, 48, 49, 50, 52, 53, 54, 56, 57, 58, 60, 61, 62};
+const int numBlocks = sizeof(dataBlocks) / sizeof(dataBlocks[0]);
+
+// connect to wifi + init
 void setup()
 {
   Serial.begin(9600);
+  delay(1000);
   SPI.begin();
-  rfid.init();
-  Serial.println("Ready to find card...");
+  mfrc522.PCD_Init();
+
+  for (byte i = 0; i < 6; i++)
+    key.keyByte[i] = 0xFF;
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi connected!");
+  Serial.println(WiFi.localIP());
+
+  Serial.println("Tap a card to read + send its data...");
 }
 
-// TODO: loop, if finds new tag, read and output the tag unique ID.
-// In loop(), use findCard() waiting for the card approaching. Once it detects card contact, this function will return MI_OK and save the card type data in parameter str.
+// detect rfid and send HTTP
 void loop()
 {
-  // Search card, return card types
-  if (rfid.findCard(PICC_REQIDL, str) == MI_OK)
+  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial())
   {
-    // Anti-collision detection, read card serial number
-    if (rfid.anticoll(str) == MI_OK)
-    {
-
-      // Print the UID in a clean, standard Hex string format
-      for (int i = 0; i < 4; i++)
-      {
-        if (str[i] < 0x10)
-          Serial.print("0");
-        Serial.print(str[i], HEX);
-      }
-      Serial.println(); 
-
-      // Card selection to lock the card and prevent spamming reads
-      rfid.selectTag(str);
-    }
+    return;
   }
-  rfid.halt();
-  delay(500);
-}
 
-void ShowCardType(unsigned char *type)
-{
-  Serial.print("Card type: ");
-  if (type[0] == 0x04 && type[1] == 0x00)
-    Serial.println("MFOne-S50");
-  else if (type[0] == 0x02 && type[1] == 0x00)
-    Serial.println("MFOne-S70");
-  else if (type[0] == 0x44 && type[1] == 0x00)
-    Serial.println("MF-UltraLight");
-  else if (type[0] == 0x08 && type[1] == 0x00)
-    Serial.println("MF-Pro");
-  else if (type[0] == 0x44 && type[1] == 0x03)
-    Serial.println("MF Desire");
+  String jsonData = readDataFromCard();
+  Serial.print("Read from card: ");
+  Serial.println(jsonData);
+
+  if (jsonData.length() > 0)
+  {
+    sendToLocalServer(jsonData);
+  }
   else
-    Serial.println("Unknown");
+  {
+    Serial.println("No data found on card (empty or unwritten).");
+  }
+
+  mfrc522.PICC_HaltA();
+  mfrc522.PCD_StopCrypto1();
+  delay(1500);
 }
 
-/*68E546F3
-F3E28604
-78B208F3
-35FFE9EA
-451E7FEA
-784B42F3
-EAB04D32
-35536B05*/
+String readDataFromCard()
+{
+  String result = "";
+  int currentSector = -1;
+  for (int i = 0; i < numBlocks; i++)
+  {
+    byte block = dataBlocks[i];
+    int sector = block / 4;
+
+    if (sector != currentSector)
+    {
+      auto status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, &key, &(mfrc522.uid));
+      if (status != MFRC522::STATUS_OK)
+        break;
+      currentSector = sector;
+    }
+
+    byte buffer[18];
+    byte size = sizeof(buffer);
+    auto status = mfrc522.MIFARE_Read(block, buffer, &size);
+    if (status != MFRC522::STATUS_OK)
+      break;
+
+    bool stop = false;
+    for (int j = 0; j < 16; j++)
+    {
+      if (buffer[j] == 0x00)
+      {
+        stop = true;
+        break;
+      }
+      result += (char)buffer[j];
+    }
+    if (stop)
+      break;
+  }
+  return result;
+}
+
+void sendToLocalServer(String jsonPayload)
+{
+  // Ensure wifi connection
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("WiFi not connected.");
+    return;
+  }
+
+  // Create HTTP Client and choose correct server
+  HTTPClient http;
+  http.begin(serverUrl);
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Accept", "application/json");
+
+  int httpResponseCode = http.POST(jsonPayload);
+
+  // If successful, print response. Else, print error code
+  if (httpResponseCode > 0)
+  {
+    String response = http.getString();
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    Serial.println(response);
+  }
+  else
+  {
+    Serial.print("Error sending POST: ");
+    Serial.println(httpResponseCode);
+  }
+
+  http.end();
+}
