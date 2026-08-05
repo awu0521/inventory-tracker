@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { itemTypeNames } from "../constants/itemTypes";
+import { useNavigate } from "react-router-dom";
 
 function ItemComponents() {
     const [components, setComponents] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:3000/api/components")
@@ -47,6 +49,13 @@ function ItemComponents() {
                         {filteredComponents.map((component, index) => (
                             <li
                                 key={index}
+                                onClick={() =>
+                                    navigate("/component-view", {
+                                        state: {
+                                            component,
+                                        },
+                                    })
+                                }
                                 className="rounded-lg border p-4 hover:bg-gray-50"
                             >
                                 <p className="font-semibold text-lg">
