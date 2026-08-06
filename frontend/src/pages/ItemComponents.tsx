@@ -1,21 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { itemTypeNames } from "../constants/itemTypes";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function ItemComponents() {
     const [components, setComponents] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
+    const previousComponentCount = useRef<number | null>(null);
+
     useEffect(() => {
-        fetch("http://localhost:3000/api/components")
-            .then((response) => response.json())
-            .then((data) => {
-                setComponents(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching components:", error);
-            });
+        const fetchComponents = () => {
+            fetch("http://localhost:3000/api/components")
+                .then((response) => response.json())
+                .then((data) => {
+                    if (previousComponentCount.current !== null &&
+                        data.length > previousComponentCount.current) toast.success("Component Added");
+                    previousComponentCount.current = data.length;
+                    setComponents(data);
+                });
+        };
+
+        fetchComponents();
+
+        const interval = setInterval(fetchComponents, 5000);
+
+        return () => clearInterval(interval);
     }, []);
 
     const filteredComponents = components.filter((component) =>

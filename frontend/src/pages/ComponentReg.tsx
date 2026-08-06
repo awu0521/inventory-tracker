@@ -3,6 +3,8 @@ import { itemTypeNames } from "../constants/itemTypes";
 import axios from "axios";
 import {DescInput, DimensionInput, isValidAttributes, NameInput, TypeInput, WeightInput} from "../components/forms/ComponentInputs";
 import { CreateComponentButton } from "../components/forms/CreateComponentButton";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const QUEUE_PORT = "http://localhost:3000/api/components-queue";
 const REG_PORT = "http://localhost:3000/api/reg-component";
@@ -19,6 +21,7 @@ function ComponentReg() {
         dimensions: { length: 0, width: 0, height: 0 },
         desc: '',
     });
+    const navigate = useNavigate();
 
     const fetchComponents = async () => {
         try {
@@ -52,6 +55,7 @@ function ComponentReg() {
             const response = await axios.post(REG_PORT, itemComponentJSON);
 
             console.log("Component created:", response.data);
+            toast.success("Component Registered");
 
             // refreshes the queue on the frontend
             fetchComponents();
@@ -112,6 +116,13 @@ function ComponentReg() {
                         {filteredComponents.map((component, index) => (
                             <li
                                 key={index}
+                                onClick={() =>
+                                    navigate("/component-view", {
+                                        state: {
+                                            component,
+                                        },
+                                    })
+                                }
                                 className="rounded-lg border p-4 hover:bg-gray-50"
                             >
                                 <p className="font-semibold text-lg">

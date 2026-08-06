@@ -1,20 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { shipmentStatusNames } from "../constants/shipmentStatuses";
+import toast from "react-hot-toast";
 
 function Shipments() {
     const [shipments, setShipments] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const previousShipmentCount = useRef<number | null>(null);
+
     useEffect(() => {
-        fetch("http://localhost:3000/api/shipments")
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Shipments received:", data);
-                setShipments(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching shipments:", error);
-            });
+        const fetchShipments = () => {
+            fetch("http://localhost:3000/api/shipments")
+                .then((response) => response.json())
+                .then((data) => {
+                    if (previousShipmentCount.current !== null &&
+                        data.length > previousShipmentCount.current) toast.success("Component Added");
+                    previousShipmentCount.current = data.length;
+                    setShipments(data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching shipments:", error);
+                });
+        };
+
+        fetchShipments();
+
+        const interval = setInterval(fetchShipments, 5000);
+
+        return () => clearInterval(interval);
     }, []);
 
     const filteredShipments = shipments.filter((shipment) =>
