@@ -5,6 +5,7 @@ import { CreateShipmentButton } from "../components/forms/CreateShipmentButton";
 import { RegButton } from "../components/forms/RegButton";
 import { shipmentStatusNames } from "../constants/shipmentStatuses";
 import { isValidAttributes } from "../components/forms/ShipmentInputs";
+import toast from "react-hot-toast";
 
 // TODO: change ports to match endpoints for grabbing and adding to shipment queue
 const QUEUE_PORT = "http://localhost:3000/api/shipments-queue";
@@ -58,6 +59,8 @@ function ShipmentReg() {
             const response = await axios.post(REG_PORT, shipmentJSON);
 
             console.log("Shipment created:", response.data);
+            toast.success("Shipment Registered");
+
 
             // refreshes the queue on the frontend
             fetchShipments();

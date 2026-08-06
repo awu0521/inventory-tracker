@@ -9,6 +9,7 @@ import SensorReg from "./pages/SensorReg";
 import ItemComponents from "./pages/ItemComponents";
 import Shipments from "./pages/Shipments";
 import ComponentView from "./pages/ComponentView";
+import { Toaster } from "react-hot-toast";
 
 const BACKEND_PORT = "http://localhost:3000";
 
@@ -27,6 +28,21 @@ function App() {
 
     return (
         <BrowserRouter>
+            <Toaster
+                position="bottom-right"
+                reverseOrder={false}
+                toastOptions={{
+                    style: {
+                        fontSize: "18px",
+                        padding: "16px",
+                        minWidth: "300px",
+                        background: "#4a4646ff",
+                        color: "#fff",
+                        borderRadius: "10px",
+                    },
+                }}
+            />
+
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />

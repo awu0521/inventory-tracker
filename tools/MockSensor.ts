@@ -40,7 +40,7 @@ async function moveShipment() {
 
 async function main() {
     await moveShipment(); // incoming Shipment
-    await moveShipment(); // outgoing Shipment
+    // await moveShipment(); // outgoing Shipment
 }
 
 main();
