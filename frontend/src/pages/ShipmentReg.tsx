@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { NameInput, OriginInput, DestInput, StatusInput, DeadlineInput } from "../components/forms/ShipmentInputs";
 import { CreateShipmentButton } from "../components/forms/CreateShipmentButton";
+import { RegButton } from "../components/forms/RegButton";
 import { shipmentStatusNames } from "../constants/shipmentStatuses";
 import { isValidAttributes } from "../components/forms/ShipmentInputs";
 
@@ -117,7 +118,7 @@ function ShipmentReg() {
                         {filteredShipments.map((shipment, index) => (
                             <li
                                 key={index}
-                                className="rounded-lg border p-4 hover:bg-gray-50"
+                                className="relative rounded-lg border p-4 hover:bg-gray-50"
                             >
                                 <p className="font-semibold text-lg">
                                     {shipment.name}
@@ -133,21 +134,25 @@ function ShipmentReg() {
 
                                 {/* Only displays for ItemContainers */}
                                 {shipment.contents && (
-                                    <div className="mt-4">
-                                        <p className="font-semibold">
-                                            Contents:
-                                        </p>
-
+                                    <div>
+                                        <p className="font-semibold">Contents:</p>
                                         <ul className="list-disc ml-6">
-                                            {/* TODO: fix components not showing for item component contents */}
                                             {shipment.contents.map((item: any, index: number) => (
                                                 <li key={index}>
                                                     {item.name}
+                                                    {item.components?.length > 0 && (
+                                                        <ul className="list-disc ml-6">
+                                                            {item.components.map((component: any, componentIndex: number) => (
+                                                                <li key={componentIndex}>{component.name}</li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
                                 )}
+                                <RegButton handleRegisterToTag={() => {}} />
                             </li>
                         ))}
                     </ul>
