@@ -79,7 +79,7 @@ function ComponentReg() {
             <h1 className="text-3xl font-bold" >
                 Item Component Registration
             </h1>
-            <div className="border rounded-lg p-6 shadow-md">
+            <div className="border rounded-lg p-6 shadow-md bg-gray-600 text-white">
                 <div className="flex gap-3 py-2">
                     <NameInput formData={formData} setFormData={setFormData}/>
                     <WeightInput formData={formData} setFormData={setFormData}/>

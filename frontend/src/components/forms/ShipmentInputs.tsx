@@ -42,7 +42,7 @@ export function NameInput({ formData, setFormData }: InputProps) {
                         name: event.target.value,
                     })
                 }
-                className="w-48 border rounded px-3 py-2"
+                className="w-48 border rounded px-3 py-2 text-black"
                 required
             />
         </div>
@@ -63,7 +63,7 @@ export function OriginInput({ formData, setFormData }: InputProps) {
                         origin: event.target.value,
                     })
                 }
-                className="w-48 border rounded px-3 py-2"
+                className="w-48 border rounded px-3 py-2 text-black"
                 required
             />
         </div>
@@ -84,7 +84,7 @@ export function DestInput({ formData, setFormData }: InputProps) {
                         dest: event.target.value,
                     })
                 }
-                className="w-48 border rounded px-3 py-2"
+                className="w-48 border rounded px-3 py-2 text-black"
                 required
             />
         </div>
@@ -93,7 +93,7 @@ export function DestInput({ formData, setFormData }: InputProps) {
 
 export function StatusInput({ formData, setFormData }: InputProps) {
     return (
-        <div className="flex justify-center mt-5 mb-4">
+        <div className="flex justify-center items-center gap-3 mt-5 mb-4">
             <label className="block">Status</label>
 
             <select
@@ -105,7 +105,7 @@ export function StatusInput({ formData, setFormData }: InputProps) {
                         status: event.target.value,
                     })
                 }
-                className="border rounded px-3 py-2"
+                className="border rounded px-3 py-2 bg-white text-black"
             >
                 <option value="INCOMING">INCOMING</option>
                 <option value="PROCESSING">PROCESSING</option>
@@ -132,7 +132,7 @@ export function DeadlineInput({ formData, setFormData }: InputProps) {
                         deadline: event.target.value,
                     })
                 }
-                className="w-full border rounded px-3 py-1"
+                className="w-full border rounded px-3 py-1 text-black"
                 required
             />
         </div>

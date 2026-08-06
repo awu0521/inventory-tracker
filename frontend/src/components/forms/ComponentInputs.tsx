@@ -54,7 +54,7 @@ export function NameInput({ formData, setFormData }: InputProps) {
                         name: event.target.value,
                     })
                 }
-                className="w-48 border rounded px-3 py-2"
+                className="w-48 border rounded px-3 py-2 text-black"
                 required
             />
         </div>
@@ -75,7 +75,7 @@ export function WeightInput({ formData, setFormData }: InputProps) {
                         weight: event.target.valueAsNumber > 0 ? event.target.valueAsNumber : 0,
                     })
                 }
-                className="w-24 border rounded px-3 py-2"
+                className="w-24 border rounded px-3 py-2 text-black"
                 required
             />
         </div>
@@ -102,7 +102,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
                             },
                         })
                     }
-                    className="w-20 border rounded px-3 py-2"
+                    className="w-20 border rounded px-3 py-2 text-black"
                     required
                 />
 
@@ -120,7 +120,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
                             },
                         })
                     }
-                    className="w-20 border rounded px-3 py-2"
+                    className="w-20 border rounded px-3 py-2 text-black"
                     required
                 />
 
@@ -138,7 +138,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
                             },
                         })
                     }
-                    className="w-20 border rounded px-3 py-2"
+                    className="w-20 border rounded px-3 py-2 text-black"
                     required
                 />
             </div>
@@ -148,7 +148,7 @@ export function DimensionInput({ formData, setFormData }: InputProps) {
 
 export function TypeInput({ formData, setFormData }: InputProps) {
     return (
-        <div className="flex justify-center mt-5 mb-4">
+        <div className="gap-3 flex justify-center mt-5 mb-4">
             <label className="block">Type:</label>
 
             <select
@@ -160,7 +160,7 @@ export function TypeInput({ formData, setFormData }: InputProps) {
                         type: event.target.value,
                     })
                 }
-                className="border rounded px-3 py-2"
+                className="border rounded px-3 py-2 text-black"
             >
                 <option value="FRAGILE">FRAGILE</option>
                 <option value="ORGANIC">ORGANIC</option>
@@ -185,7 +185,7 @@ export function DescInput({ formData, setFormData }: InputProps) {
                         desc: event.target.value,
                     })
                 }
-                className="w-full border rounded px-3 py-1"
+                className="w-full border rounded px-3 py-1 text-black"
                 required
             />
         </div>

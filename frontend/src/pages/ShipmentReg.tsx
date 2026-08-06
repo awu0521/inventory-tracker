@@ -85,7 +85,7 @@ function ShipmentReg() {
             <h1 className="text-3xl font-bold" >
                 Shipment Registration
             </h1>
-            <div className="border rounded-lg p-6 shadow-md">
+            <div className="border rounded-lg p-6 shadow-md bg-gray-600 text-white">
                 <div className="flex gap-3 py-2">
                     <NameInput formData={formData} setFormData={setFormData}/>
                     <OriginInput formData={formData} setFormData={setFormData}/>
